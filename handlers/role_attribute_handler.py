@@ -43,7 +43,7 @@ def generate_role_equip_card(data: dict) -> bytes:
 
 def handle_role_attribute_card(content: str):
     parts = content.strip().split()
-    server = ""
+    server = "梦江南"
     name = ""
 
     if len(parts) >= 3:
