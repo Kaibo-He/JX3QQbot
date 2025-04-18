@@ -1,0 +1,27 @@
+name: Deploy JX3 Bot to EC2
+
+on:
+  push:
+    branches:
+      - main  # 每次 push 到 main 分支就自动部署
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd JX3QQbot
+            git pull origin main
+            source venv/bin/activate
+            tmux kill-session -t jx3bot || true
+            tmux new-session -d -s jx3bot "source venv/bin/activate && python main.py"
