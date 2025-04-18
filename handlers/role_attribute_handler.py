@@ -2,11 +2,7 @@ import asyncio
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 from playwright.async_api import async_playwright
-import datetime
 import os
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 import hashlib
 import time
 from jx3api import get_role_attribute
@@ -27,12 +23,15 @@ async def render_html_to_image(html: str, output_path: str):
         await browser.close()
 
 # 接收角色数据，生成卡片图
-def generate_role_equip_card(data: dict) -> bytes:
-    # 缓存判断
+async def generate_role_equip_card(data: dict) -> bytes:
+    # 缓存 key
     cache_key = hashlib.md5((data.get("roleName", "") + data.get("serverName", "")).encode()).hexdigest()
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
-    if os.path.exists(cache_path) and time.time() - os.path.getmtime(cache_path) < CACHE_DURATION:
-        return Path(cache_path).read_bytes()
+    # 缓存命中且未过期
+    if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path) < CACHE_DURATION):
+        img = Path(cache_path).read_bytes()
+        os.remove(cache_path)
+        return img
     
     # 渲染
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
@@ -51,12 +50,14 @@ def generate_role_equip_card(data: dict) -> bytes:
     }
 
     html = template.render(context)
-    asyncio.run(render_html_to_image(html, OUTPUT_PATH))
-    image_bytes = Path(OUTPUT_PATH).read_bytes()
-    os.remove(OUTPUT_PATH)  # 自动删除临时文件
-    return image_bytes
+    
+    # 生成并保存
+    await render_html_to_image(html, cache_path)
+    img = Path(cache_path).read_bytes()
+    os.remove(cache_path)
+    return img
 
-def handle_role_attribute_card(content: str):
+async def handle_role_attribute_card(content: str):
     parts = content.strip().split()
     server = "梦江南"
     name = ""
@@ -71,7 +72,7 @@ def handle_role_attribute_card(content: str):
     if not data:
         return { "content": "⚠️ 无法获取角色属性信息", "file_image": None }
 
-    image = generate_role_equip_card(data)
+    image = await generate_role_equip_card(data)
     return {
         "content": f"{data['roleName']} 的装备详情卡片如下：",
         "file_image": image
