@@ -24,15 +24,15 @@ def generate_role_equip_card(data: dict) -> bytes:
     template = env.get_template("equip_card.html")
 
     context = {
-        "role_name": data["roleName"],
-        "avatar_url": data["personAvatar"],
-        "kungfu_name": data["kungfuName"],
-        "force_name": data["forceName"],
-        "zone_name": data["zoneName"],
-        "server_name": data["serverName"],
-        "score": data["panelList"]["score"],
-        "equipList": data["equipList"],
-        "panelList": data["panelList"]
+        "role_name": data.get("roleName", "未知角色"),
+        "avatar_url": data.get("personAvatar", ""), 
+        "kungfu_name": data.get("kungfuName", "未知心法"),
+        "force_name": data.get("forceName", "未知门派"),
+        "zone_name": data.get("zoneName", "未知区服"),
+        "server_name": data.get("serverName", "未知区服"),
+        "score": data.get("panelList", {}).get("score", 0),
+        "equipList": data.get("equipList", []),
+        "panelList": data.get("panelList", {"panel": []})
     }
 
     html = template.render(context)
