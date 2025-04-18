@@ -64,7 +64,7 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
                 
-        elif content.startswith("副本") or content.startswith("cd"):
+        elif content.startswith("副本") or content.startswith("cd") or content.startswith("CD"):
             reply = handle_team_cd_query(content)
             await self.api.post_dms(
                 guild_id=message.guild_id,
