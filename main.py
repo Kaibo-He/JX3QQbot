@@ -8,6 +8,7 @@ from botpy import logging
 from handlers.open_server_handler import handle_open_server_query
 from handlers.calendar_handler import handle_calendar_query
 from handlers.qqshow_handler import handle_qqshow_query
+from handlers.role_attribute_handler import handle_role_attribute_card
 
 config = get_bot_config()
 _log = logging.get_logger()
