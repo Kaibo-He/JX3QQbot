@@ -9,6 +9,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 import hashlib
 import time
+from jx3api import get_role_attribute
 
 TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/equip_card.png"
