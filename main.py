@@ -10,6 +10,7 @@ from handlers.calendar_handler import handle_calendar_query
 from handlers.qqshow_handler import handle_qqshow_query
 from handlers.role_attribute_handler import handle_role_attribute_card
 from handlers.team_cd_handler import handle_team_cd_query
+from handlers.yizhiku_handler import get_current_quarter_result
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -66,6 +67,14 @@ class JX3BotClient(botpy.Client):
                 
         elif content.startswith("副本") or content.startswith("cd") or content.startswith("CD"):
             reply = handle_team_cd_query(content)
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                msg_id=message.id,
+                content=reply["content"]
+            )
+    
+        elif content.startswith("解密") or content.startswith("解谜"):
+            reply = get_current_quarter_result()
             await self.api.post_dms(
                 guild_id=message.guild_id,
                 msg_id=message.id,
