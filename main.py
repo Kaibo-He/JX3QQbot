@@ -1,14 +1,14 @@
 # main.py
 import os
 import botpy
-from botpy.ext.cog_yaml import read
+from config_loader import get_bot_config
 from botpy.message import DirectMessage
 from botpy import logging
 
 from handlers.open_server_handler import handle_open_server_query
 from handlers.calendar_handler import handle_calendar_query
 
-config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
+config = get_bot_config()
 _log = logging.get_logger()
 
 
@@ -24,7 +24,7 @@ class JX3BotClient(botpy.Client):
         elif "日历" in content or "日常" in content:
             reply = handle_calendar_query(content)
         else:
-            reply = "暂不支持该指令~ 可输入 开服 / 日历 查看相关信息"
+            reply = "暂不支持该指令~ 详情请查询功能列表！"
 
         await self.api.post_dms(
             guild_id=message.guild_id,

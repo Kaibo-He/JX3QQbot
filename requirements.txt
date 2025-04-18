@@ -1,0 +1,4 @@
+botpy
+requests
+PyYAML
+python-dotenv

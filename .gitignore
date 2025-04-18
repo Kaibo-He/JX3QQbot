@@ -1,0 +1,13 @@
+# 忽略 config.yaml（QQ Bot 凭据）
+config.yaml
+
+# 忽略 .env
+.env
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# VSCode/IDE
+.vscode/
+.idea/
