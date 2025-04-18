@@ -24,7 +24,7 @@ class JX3BotClient(botpy.Client):
         elif "日历" in content or "日常" in content:
             reply = handle_calendar_query(content)
         else:
-            reply = "暂不支持该指令~ 详情请查询功能列表！"
+            reply = "暂不支持该指令,详情请查询功能列表。"
 
         await self.api.post_dms(
             guild_id=message.guild_id,
