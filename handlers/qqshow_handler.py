@@ -1,3 +1,4 @@
+import requests
 from jx3api import get_role_qqshow
 
 def handle_qqshow_query(content: str) -> str:
@@ -16,23 +17,12 @@ def handle_qqshow_query(content: str) -> str:
     if not result:
         return {
             "content": f"⚠️ 无法查询角色「{name}」在「{server}」的名片信息，请确认角色是否存在。",
-            "image_bytes": None
+            "image": None,
+            "file_image": None
         }
 
-    # 下载图片并返回二进制内容
-    try:
-        image_res = requests.get(result["showAvatar"])
-        if image_res.status_code != 200:
-            raise Exception("Image download failed")
-
-        return {
-            "content": f"🎴 角色名片：{name}@{server}",
-            "image_bytes": image_res.content
-        }
-
-    except Exception as e:
-        print("图片获取失败：", e)
-        return {
-            "content": f"已获取角色名片信息，但图片下载失败：{result['showAvatar']}",
-            "image_bytes": None
-        }
+    return {
+        "content": f"🎴 角色名片：{name}@{server}",
+        "image": result["showAvatar"],
+        "file_image": None
+    }
