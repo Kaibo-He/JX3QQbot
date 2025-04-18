@@ -74,6 +74,6 @@ async def handle_role_attribute_card(content: str):
 
     image = await generate_role_equip_card(data)
     return {
-        "content": f"{data['roleName']} 的装备详情卡片如下：",
+        "content": f"{data['roleName']} 的装备详情如下：",
         "file_image": image
     }
