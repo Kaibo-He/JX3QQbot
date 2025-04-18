@@ -94,7 +94,7 @@ def get_role_qqshow(server: str, name: str):
     
 # 角色装备
 def get_role_attribute(server: str, name: str):
-    url = "https://www.jx3api.com/data/show/card"
+    url = "https://www.jx3api.com/data/role/attribute"
     auth = get_jx3api_auth()
     
     payload = {
