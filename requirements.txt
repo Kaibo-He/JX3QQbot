@@ -1,4 +1,4 @@
-botpy
+git+https://github.com/tencent-connect/botpy.git
 requests
 PyYAML
 python-dotenv
