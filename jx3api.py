@@ -124,3 +124,27 @@ def get_role_attribute(server: str, name: str):
     except Exception as e:
         print("Error fetching role attribute:", e)
         return None
+    
+# 副本CD
+def get_team_cd_data(server: str, name: str):
+    url = "https://www.jx3api.com/data/role/teamCdList"
+    auth = get_jx3api_auth()
+
+    payload = {
+        "server": server,
+        "name": name,
+        "ticket": auth["ticket"],
+        "token": auth["token"]
+    }
+
+    try:
+        res = requests.post(url, json=payload, timeout=10)
+        if res.status_code != 200:
+            return None
+        result = res.json()
+        if result.get("code") != 200 or "data" not in result:
+            return None
+        return result["data"]
+    except Exception as e:
+        print("副本CD请求失败:", e)
+        return None

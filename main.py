@@ -9,6 +9,7 @@ from handlers.open_server_handler import handle_open_server_query
 from handlers.calendar_handler import handle_calendar_query
 from handlers.qqshow_handler import handle_qqshow_query
 from handlers.role_attribute_handler import handle_role_attribute_card
+from handlers.team_cd_handler import handle_team_cd_query
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -63,6 +64,14 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
                 
+        elif content.startswith("副本") or content.startswith("cd"):
+            reply = handle_team_cd_query(content)
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                msg_id=message.id,
+                content=reply["content"]
+            )
+    
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
             await self.api.post_dms(
