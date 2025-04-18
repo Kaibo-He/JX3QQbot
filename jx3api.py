@@ -2,6 +2,8 @@
 import requests
 import datetime
 from config_loader import get_jx3api_auth
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 # 开服状态
 def get_server_status(server: str = "梦江南"):
@@ -105,17 +107,20 @@ def get_role_attribute(server: str, name: str):
     }
     
     try:
-        res = requests.post(url, json=payload, timeout=5)
+        session = requests.Session()
+        retry_strategy = Retry(total=2, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        session.mount("https://", adapter)
+
+        res = session.post(url, json=payload, timeout=20)
         if res.status_code != 200:
             return None
 
         result = res.json()
-        if result["code"] != 200 or "data" not in result:
+        if result.get("code") != 200 or "data" not in result:
             return None
 
-        data = result["data"]
-        return data
-
+        return result["data"]
     except Exception as e:
         print("Error fetching role attribute:", e)
         return None

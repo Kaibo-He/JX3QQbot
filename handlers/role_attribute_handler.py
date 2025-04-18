@@ -4,10 +4,17 @@ from pathlib import Path
 from playwright.async_api import async_playwright
 import datetime
 import os
-from jx3api import get_role_attribute
+import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+import hashlib
+import time
 
 TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/equip_card.png"
+CACHE_DIR = "/tmp/equip_cache"
+os.makedirs(CACHE_DIR, exist_ok=True)
+CACHE_DURATION = 60  # 缓存60秒
 
 # HTML 渲染为图片
 async def render_html_to_image(html: str, output_path: str):
@@ -20,6 +27,13 @@ async def render_html_to_image(html: str, output_path: str):
 
 # 接收角色数据，生成卡片图
 def generate_role_equip_card(data: dict) -> bytes:
+    # 缓存判断
+    cache_key = hashlib.md5((data.get("roleName", "") + data.get("serverName", "")).encode()).hexdigest()
+    cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
+    if os.path.exists(cache_path) and time.time() - os.path.getmtime(cache_path) < CACHE_DURATION:
+        return Path(cache_path).read_bytes()
+    
+    # 渲染
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("equip_card.html")
 
