@@ -91,3 +91,31 @@ def get_role_qqshow(server: str, name: str):
     except Exception as e:
         print("Error fetching card:", e)
         return None
+    
+# 角色装备
+def get_role_attribute(server: str, name: str):
+    url = "https://www.jx3api.com/data/show/card"
+    auth = get_jx3api_auth()
+    
+    payload = {
+        "server": server,
+        "name": name,
+        "ticket": auth["ticket"],
+        "token": auth["token"]
+    }
+    
+    try:
+        res = requests.post(url, json=payload, timeout=5)
+        if res.status_code != 200:
+            return None
+
+        result = res.json()
+        if result["code"] != 200 or "data" not in result:
+            return None
+
+        data = result["data"]
+        return data
+
+    except Exception as e:
+        print("Error fetching role attribute:", e)
+        return None

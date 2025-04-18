@@ -46,6 +46,22 @@ class JX3BotClient(botpy.Client):
                     image=reply["image"],
                 )
                 
+        elif content.startswith("属性") or content.startswith("装备"):
+            reply = handle_role_attribute_card(content)
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    image=reply["file_image"]
+            )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
+                
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
             await self.api.post_dms(
