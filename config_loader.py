@@ -9,3 +9,9 @@ def get_bot_config():
         "secret": os.getenv("BOT_SECRET"),
         "token": os.getenv("BOT_TOKEN")
     }
+
+def get_jx3api_auth():
+    return {
+        "token": os.getenv("JX3_TOKEN"),
+        "ticket": os.getenv("JX3_TICKET")
+    }
