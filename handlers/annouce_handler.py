@@ -2,6 +2,7 @@ from jx3api import get_news_announce, get_maintenance_announce, get_skill_announ
 from playwright.async_api import async_playwright
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
+import hashlib
 import os
 from handlers.html_to_image import render_html_to_image
 
