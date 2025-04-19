@@ -84,19 +84,35 @@ class JX3BotClient(botpy.Client):
             
         elif cmd in ["技改"]:
             reply = await handle_skill_announce()
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                content=f"{reply['title']}\n{reply['content']}",
-                msg_id=message.id,
-            )
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
             
         elif cmd in ["维护"]:
             reply = await handle_maintenance_announce()
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                content=f"{reply['title']}\n{reply['content']}",
-                msg_id=message.id,
-            )
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
             
         elif cmd in ["公告"]:
             reply = await handle_news_announce()
