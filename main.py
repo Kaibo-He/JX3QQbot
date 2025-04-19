@@ -22,11 +22,8 @@ class JX3BotClient(botpy.Client):
         _log.info(f"机器人「{self.robot.name}」已上线")
 
     async def on_direct_message_create(self, message: DirectMessage):
-        print("触发成功！！！")
-        _log.info(f"收到消息内容：{repr(message.content)}")
         content = message.content.strip()
         cmd = content.strip().split()[0]
-        _log.info(f"命令词提取结果: {cmd}")
 
         if cmd in ["开服"]:
             reply = handle_open_server_query(content)
@@ -134,19 +131,11 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
                 
-        elif cmd in ["芋泥啵啵奶茶"]:
-            reply = "好喝。"
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                content=reply,
-                msg_id=message.id,
-            )
-    
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
             await self.api.post_dms(
                 guild_id=message.guild_id,
-                content=f"我收到的 cmd 是：[{repr(cmd)}]，不在任何分支里！",
+                content=reply,
                 msg_id=message.id,
             )
 
