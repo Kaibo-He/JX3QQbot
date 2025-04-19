@@ -1,9 +1,5 @@
 from jx3api import get_news_announce, get_maintenance_announce, get_skill_announce
-from handlers.html_to_image import render_element_to_image
-from pathlib import Path
-import hashlib
-import os
-import time
+from playwright.async_api import async_playwright
 
 CLASS_NAME = "index-mainContainer-1IdO6"
 
