@@ -4,10 +4,16 @@ config.yaml
 # 虚拟环境
 .env
 venv/
+ENV/
+.venv/
+.pyenv/
+env/
 
 # Python 缓存
 __pycache__/
+*.pyc
 *.py[cod]
+*$py.class
 
 # VSCode/IDE
 .vscode/
@@ -20,3 +26,6 @@ __pycache__/
 # 日志文件
 *.log
 botpy.log
+*.pot
+*.pid
+*.tmp

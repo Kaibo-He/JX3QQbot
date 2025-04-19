@@ -21,7 +21,8 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd JX3QQbot
-            git pull origin main
+            git fetch origin
+            git reset --hard origin/main
             source venv/bin/activate
             tmux kill-session -t jx3bot || true
             tmux new-session -d -s jx3bot "source venv/bin/activate && python main.py"
