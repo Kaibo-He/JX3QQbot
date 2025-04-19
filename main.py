@@ -34,6 +34,7 @@ class JX3BotClient(botpy.Client):
         _log.info(f"命令词提取结果: {cmd}")
 
         if cmd in ["开服"]:
+            print(f"进入了判断：{cmd}")
             reply = handle_open_server_query(content)
             await self.api.post_dms(
                 guild_id=message.guild_id,
