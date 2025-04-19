@@ -1,5 +1,4 @@
-# main.py
-import os
+import re
 import botpy
 from config_loader import get_bot_config
 from botpy.message import DirectMessage
@@ -23,8 +22,9 @@ class JX3BotClient(botpy.Client):
 
     async def on_direct_message_create(self, message: DirectMessage):
         content = message.content.strip()
+        cmd = content.strip().split()[0]
 
-        if content.startswith("开服"):
+        if cmd in ["开服"]:
             reply = handle_open_server_query(content)
             await self.api.post_dms(
                 guild_id=message.guild_id,
@@ -32,7 +32,7 @@ class JX3BotClient(botpy.Client):
                 msg_id=message.id,
             )
 
-        elif "日历" in content or "日常" in content:
+        elif cmd in ["日历", "日常"]:
             reply = handle_calendar_query(content)
             await self.api.post_dms(
                 guild_id=message.guild_id,
@@ -40,7 +40,7 @@ class JX3BotClient(botpy.Client):
                 msg_id=message.id,
             )
 
-        elif content.startswith("名片") or content.startswith("qq秀") or content.startswith("QQ秀"):
+        elif cmd in ["名片", "qq秀", "QQ秀"]:
             reply = handle_qqshow_query(content)
             if reply.get("image"):
                 await self.api.post_dms(
@@ -50,7 +50,7 @@ class JX3BotClient(botpy.Client):
                     image=reply["image"],
                 )
                 
-        elif content.startswith("属性") or content.startswith("装备"):
+        elif cmd in ["属性", "装备"]:
             reply = await handle_role_attribute_card(content)
             if reply["file_image"]:
                 await self.api.post_dms(
@@ -66,7 +66,7 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
                 
-        elif content.startswith("副本") or content.startswith("cd") or content.startswith("CD"):
+        elif cmd.lower() in ["副本", "cd"]:
             reply = handle_team_cd_query(content)
             await self.api.post_dms(
                 guild_id=message.guild_id,
@@ -74,7 +74,7 @@ class JX3BotClient(botpy.Client):
                 content=reply["content"]
             )
     
-        elif content.startswith("解密") or content.startswith("解谜"):
+        elif cmd in ["解密", "解谜"]:
             reply = get_current_quarter_result()
             await self.api.post_dms(
                 guild_id=message.guild_id,
@@ -82,7 +82,7 @@ class JX3BotClient(botpy.Client):
                 content=reply["content"]
             )
             
-        elif content.startswith("技改"):
+        elif cmd == "技改":
             reply = await handle_skill_announce()
             if reply["file_image"]:
                 await self.api.post_dms(
@@ -98,7 +98,7 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
             
-        elif content.startswith("维护"):
+        elif cmd == "公告":
             reply = await handle_maintenance_announce()
             if reply["file_image"]:
                 await self.api.post_dms(
