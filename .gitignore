@@ -3,10 +3,11 @@ config.yaml
 
 # 虚拟环境
 .env
+venv/
 
 # Python 缓存
 __pycache__/
-*.pyc
+*.py[cod]
 
 # VSCode/IDE
 .vscode/
