@@ -23,7 +23,7 @@ class JX3BotClient(botpy.Client):
     async def on_direct_message_create(self, message: DirectMessage):
         content = message.content.strip()
         cmd = content.strip().split()[0]
-        _log.info(f"原始消息内容: {repr(message.content)}")
+        print(f"原始消息内容: {repr(message.content)}")
         _log.info(f"命令词提取结果: {cmd}")
 
         if cmd in ["开服"]:
