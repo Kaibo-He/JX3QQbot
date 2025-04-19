@@ -123,7 +123,7 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
             
-        elif cmd in ["芋泥啵啵奶茶"]:
+        elif cmd in ["公告"]:
             reply = await handle_news_announce()
             if reply["file_image"]:
                 await self.api.post_dms(
@@ -138,6 +138,14 @@ class JX3BotClient(botpy.Client):
                     msg_id=message.id,
                     content=reply["content"]
                 )
+                
+        elif cmd in ["芋泥啵啵奶茶"]:
+            reply = "好喝。"
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                content=reply,
+                msg_id=message.id,
+            )
     
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
