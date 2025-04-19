@@ -123,7 +123,7 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
             
-        elif cmd in ["公告"]:
+        elif cmd in ["芋泥啵啵奶茶"]:
             reply = await handle_news_announce()
             if reply["file_image"]:
                 await self.api.post_dms(
