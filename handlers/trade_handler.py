@@ -48,7 +48,7 @@ async def handle_trade_card(content: str):
     
     if len(parts) < 2:
         return {
-            "content": "请输入外观名称。"
+            "content": "格式错误，如需查询外观物价请输入：\n物价/外观 外观名称 [区服]"
         }
         
     server = "梦江南"

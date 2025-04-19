@@ -79,7 +79,7 @@ async def handle_auction_card(content: str):
     
     if len(parts) < 2:
         return {
-            "content": "请输入物品名称。",
+            "content": "格式错误，如需查询物品价格请输入：\n交易行/拍卖行 物品 [区服]",
             "file_image": None
         }
         

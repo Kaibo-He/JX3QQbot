@@ -11,6 +11,7 @@ from handlers.team_cd_handler import handle_team_cd_query
 from handlers.yizhiku_handler import get_current_quarter_result
 from handlers.auction_handler import handle_auction_card
 from handlers.trade_handler import handle_trade_card
+from handlers.gold_price_handler import handle_gold_price
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -112,8 +113,16 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
                 
+        elif cmd in ["金价", "金币", "买金"]:
+            reply = handle_gold_price(content)
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                content=reply,
+                msg_id=message.id,
+            )
+                
         elif cmd in ["解密", "解谜"]:
-            reply = get_current_quarter_result()
+            reply = get_current_quarter_result(content)
             await self.api.post_dms(
                 guild_id=message.guild_id,
                 msg_id=message.id,

@@ -49,7 +49,7 @@ async def handle_role_attribute_card(content: str):
     
     if len(parts) < 2:
         return {
-            "content": "请输入角色名。"
+            "content": "格式错误，如需查询角色装备请输入：\n装备/属性 角色id [区服]"
         }
         
     server = "梦江南"

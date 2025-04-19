@@ -5,8 +5,12 @@ def handle_open_server_query(content: str) -> str:
     parts = content.strip().split()
     server = "梦江南"  # 默认区服
 
-    if len(parts) >= 2:
+    if len(parts) < 2:
+        pass
+    elif len(parts) == 2:
         server = parts[1]
+    elif len(parts) > 2:
+        return "格式错误，如需查询开服状态请输入：\n开服 [区服]"
 
     status = get_server_status(server)
     if status:

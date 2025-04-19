@@ -1,6 +1,13 @@
 from datetime import datetime, timedelta
 
-def get_current_quarter_result():
+def get_current_quarter_result(content: str):
+    parts = content.strip().split()
+    
+    if len(parts) != 1:
+        return {
+        "content": "格式错误，如需一之窟解密请输入：\n解密"
+        }
+    
     # 东八区时间
     now = datetime.utcnow() + timedelta(hours=8)
     minute = (now.minute // 15) * 15

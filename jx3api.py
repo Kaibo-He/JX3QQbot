@@ -177,3 +177,33 @@ def get_trade_data(server: str, name: str):
     except Exception as e:
         print("Error fetching trade date:", e)
         return None
+    
+# 金币价格
+def get_gold_price(server: str):
+    url = "https://www.jx3api.com/data/trade/demon"
+    auth = get_jx3api_auth()
+    
+    payload = {
+        "server": server,
+        "token": auth["token"]
+    }
+    
+    try:
+        res = requests.post(url, json=payload, timeout=5)
+        if res.status_code != 200:
+            return None
+
+        result = res.json()
+        if result["code"] != 200 or "data" not in result:
+            return None
+
+        data = result["data"][0]
+        return {
+            "date": data["date"],
+            "tieba": data["tieba"],
+            "wanbaolou": data["wanbaolou"]
+        }
+
+    except Exception as e:
+        print("Error fetching calendar:", e)
+        return None

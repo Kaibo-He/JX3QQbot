@@ -1,0 +1,23 @@
+from jx3api import get_gold_price
+
+def handle_gold_price(content: str) -> str:
+    parts = content.strip().split()
+    server = "梦江南"  # 默认区服
+
+    if len(parts) < 2:
+        pass
+    elif len(parts) == 2:
+        server = parts[1]
+    elif len(parts) > 2:
+        return "格式错误，如需查询金币价格请输入：\n金价/金币/买金 [区服]"
+
+    data = get_gold_price(server)
+    if status:
+        return (
+            f"金币价格查询 | {server}\n"
+            f"时间：{data['date']}\n"
+            f"帖吧：{int(data['tieba'])}\n"
+            f"万宝楼：{int(data['wanbaolou'])}"
+        )
+    else:
+        return f"无法获取【{server}】的金币价格，接口可能出错或区服名称不正确。"

@@ -5,7 +5,7 @@ def handle_team_cd_query(content: str) -> dict:
     
     if len(parts) < 2:
         return {
-            "content": "请输入角色名。"
+            "content": "格式错误，如需角色副本CD请输入：\n副本/cd/CD 角色id [区服]"
         }
         
     server = "梦江南"
