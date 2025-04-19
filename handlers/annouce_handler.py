@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 import os
-from html_to_image import render_html_to_image
+from handlers.html_to_image import render_html_to_image
 
 TEMPLATE_DIR = "templates"
 CACHE_DIR = "/tmp/announce_cache"
