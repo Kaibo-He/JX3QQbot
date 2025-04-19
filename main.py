@@ -47,6 +47,12 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"],
                     image=reply["image"],
                 )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
                 
         elif cmd in ["属性", "装备"]:
             reply = await handle_role_attribute_card(content)
