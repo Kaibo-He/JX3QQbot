@@ -85,6 +85,8 @@ async def handle_auction_card(content: str):
     keyword = parts[1]
     if len(parts) >= 3:
         server = parts[2]
+    
+    print(f"📦 搜索关键词: {keyword}")
 
     image = await generate_auction_card(server, keyword)
     return {
