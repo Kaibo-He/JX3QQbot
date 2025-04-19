@@ -60,6 +60,9 @@ async def generate_auction_card(server: str, keyword: str) -> bytes:
         }
         filtered_item_list.append(item_data)
         
+        if len(filtered_item_list) >= 15:
+            break
+        
     context = {
         "server_name": server,
         "item_list": filtered_item_list
