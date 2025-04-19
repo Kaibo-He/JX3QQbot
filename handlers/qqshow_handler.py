@@ -16,7 +16,7 @@ def handle_qqshow_query(content: str) -> str:
         pass
     else:
         return {
-            "content": "格式错误，如需查询角色名片请输入：\n名片/qq秀/QQ秀 角色id [区服]"，
+            "content": "格式错误，如需查询角色名片请输入：\n名片/qq秀/QQ秀 角色id [区服]",
             "image":None
         }
 
