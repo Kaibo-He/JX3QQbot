@@ -86,7 +86,7 @@ class JX3BotClient(botpy.Client):
             reply = await handle_skill_announce()
             await self.api.post_dms(
                 guild_id=message.guild_id,
-                content=reply,
+                content=f"{reply['title']}\n{reply['content']}",
                 msg_id=message.id,
             )
             
@@ -94,7 +94,7 @@ class JX3BotClient(botpy.Client):
             reply = await handle_maintenance_announce()
             await self.api.post_dms(
                 guild_id=message.guild_id,
-                content=reply,
+                content=f"{reply['title']}\n{reply['content']}",
                 msg_id=message.id,
             )
             
@@ -102,7 +102,7 @@ class JX3BotClient(botpy.Client):
             reply = await handle_news_announce()
             await self.api.post_dms(
                 guild_id=message.guild_id,
-                content=reply,
+                content=f"{reply['title']}\n{reply['content']}",
                 msg_id=message.id,
             )  
                 
