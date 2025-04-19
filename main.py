@@ -115,20 +115,12 @@ class JX3BotClient(botpy.Client):
                 )
             
         elif cmd in ["公告"]:
-            reply = await handle_news_announce()
-            if reply["file_image"]:
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"],
-                    file_image=reply["file_image"]
-                )
-            else:
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"]
-                )
+            reply = "hhhhhhhhhhhhhhhhhhhh"
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                content=reply,
+                msg_id=message.id,
+            )
     
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
