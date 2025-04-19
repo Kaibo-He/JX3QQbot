@@ -79,7 +79,7 @@ class JX3BotClient(botpy.Client):
             )
             
         elif cmd in ["交易行", "拍卖行"]:
-            reply = handle_auction_card(content)
+            reply = await handle_auction_card(content)
             if reply["file_image"]:
                 await self.api.post_dms(
                     guild_id=message.guild_id,
