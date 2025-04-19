@@ -112,7 +112,7 @@ def get_current_quarter_result():
 
     return {
         "content": (
-            f"🕵️ 一之窟暗器解密助手\n"
+            f"一之窟暗器解密助手\n"
             f"当前时间段（{current_key}）：{current_result}\n"
             f"下一个时间段（{next_key}）：{next_result}"
         )

@@ -15,3 +15,4 @@ def get_jx3api_auth():
         "token": os.getenv("JX3_TOKEN"),
         "ticket": os.getenv("JX3_TICKET")
     }
+    

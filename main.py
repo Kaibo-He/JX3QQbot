@@ -9,6 +9,7 @@ from handlers.qqshow_handler import handle_qqshow_query
 from handlers.role_attribute_handler import handle_role_attribute_card
 from handlers.team_cd_handler import handle_team_cd_query
 from handlers.yizhiku_handler import get_current_quarter_result
+from handlers.auction_handler import handle_auction_card
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -70,6 +71,22 @@ class JX3BotClient(botpy.Client):
                 msg_id=message.id,
                 content=reply["content"]
             )
+            
+        elif cmd in ["交易行", "拍卖行"]:
+            reply = handle_auction_card(content)
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
     
         elif cmd in ["解密", "解谜"]:
             reply = get_current_quarter_result()

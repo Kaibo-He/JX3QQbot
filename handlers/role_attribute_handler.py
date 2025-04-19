@@ -48,18 +48,20 @@ async def generate_role_equip_card(data: dict) -> bytes:
 
 async def handle_role_attribute_card(content: str):
     parts = content.strip().split()
+    
+    if len(parts) < 2:
+        return {
+            "content": "请输入角色名。"
+        }
+        
     server = "梦江南"
-    name = ""
-
+    name = parts[1]
     if len(parts) >= 3:
-        server = parts[1]
-        name = parts[2]
-    elif len(parts) == 2:
-        name = parts[1]
+        server = parts[2]
 
     data = get_role_attribute(server=server, name=name)
     if not data:
-        return { "content": "⚠️ 无法获取角色属性信息", "file_image": None }
+        return { "content": "查询失败，可能是区服或角色名错误，或接口超时，请稍后重试。", "file_image": None }
 
     image = await generate_role_equip_card(data)
     return {

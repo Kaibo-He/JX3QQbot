@@ -1,4 +1,3 @@
-# jx3api.py
 import requests
 import datetime
 from config_loader import get_jx3api_auth
@@ -66,69 +65,6 @@ def get_daily_calendar(server: str = "梦江南", num: int = 0):
 
     except Exception as e:
         print("Error fetching calendar:", e)
-        return None
-
-# 最新公告
-def get_news_announce():
-    url = "https://www.jx3api.com/data/news/allnews"
-    
-    try:
-        res = requests.post(url, timeout=5)
-        if res.status_code != 200:
-            return None
-
-        result = res.json()
-        if result["code"] != 200 or "data" not in result:
-            return None
-
-        data = result["data"]
-
-        return data[0]["url"]
-
-    except Exception as e:
-        print("Error fetching JX3API server status:", e)
-        return None
-
-# 维护公告
-def get_maintenance_announce():
-    url = "https://www.jx3api.com/data/news/announce"
-    
-    try:
-        res = requests.post(url, timeout=5)
-        if res.status_code != 200:
-            return None
-
-        result = res.json()
-        if result["code"] != 200 or "data" not in result:
-            return None
-
-        data = result["data"]
-
-        return data[0]["url"]
-
-    except Exception as e:
-        print("Error fetching JX3API server status:", e)
-        return None
-    
-# 技改公告
-def get_skill_announce():
-    url = "https://www.jx3api.com/data/skills/records"
-    
-    try:
-        res = requests.post(url, timeout=5)
-        if res.status_code != 200:
-            return None
-
-        result = res.json()
-        if result["code"] != 200 or "data" not in result:
-            return None
-
-        data = result["data"]
-
-        return data[0]["url"]
-
-    except Exception as e:
-        print("Error fetching JX3API server status:", e)
         return None
 
 # 角色名片
