@@ -146,7 +146,7 @@ class JX3BotClient(botpy.Client):
             reply = "暂不支持该指令,详情请查询功能列表。"
             await self.api.post_dms(
                 guild_id=message.guild_id,
-                content=f"我收到的 cmd 是：[{repr(cmd)}]，不在任何分支里",
+                content=f"我收到的 cmd 是：[{repr(cmd)}]，不在任何分支里！",
                 msg_id=message.id,
             )
 
