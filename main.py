@@ -21,9 +21,9 @@ class JX3BotClient(botpy.Client):
         _log.info(f"机器人「{self.robot.name}」已上线")
 
     async def on_direct_message_create(self, message: DirectMessage):
+        _log.info(f"收到消息内容：{repr(message.content)}")
         content = message.content.strip()
         cmd = content.strip().split()[0]
-        print(f"原始消息内容: {repr(message.content)}")
         _log.info(f"命令词提取结果: {cmd}")
 
         if cmd in ["开服"]:
