@@ -15,14 +15,19 @@ async def render_element_to_image(url: str, class_name: str, output_path: str):
         browser = await p.chromium.launch()
         page = await browser.new_page()
         await page.goto(url, wait_until="networkidle")
+        await page.wait_for_timeout(2000)
 
         # 等待该 class 出现
-        await page.wait_for_selector(f".{class_name}")
+        await page.wait_for_selector(f".{class_name}", state="visible", timeout=10000)
+        element = await page.query_selector(f".{class_name}")
 
         # 获取该元素并截图
-        element = await page.query_selector(f".{class_name}")
         if element:
-            await element.screenshot(path=output_path)
+            box = await element.bounding_box()
+            if box and box['width'] > 0 and box['height'] > 0:
+                await element.screenshot(path=output_path)
+            else:
+                raise ValueError(f"元素尺寸异常，无法截图: {box}")
         else:
             print("未找到指定的元素。")
             
