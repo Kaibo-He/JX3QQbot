@@ -84,7 +84,7 @@ def get_role_qqshow(server: str, name: str):
             return None
 
         result = res.json()
-        if result["code"] != 200 or "data" not in result:
+        if result.get("code") != 200 or not result.get("data"):
             return None
 
         return result["data"]
