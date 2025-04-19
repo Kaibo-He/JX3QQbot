@@ -16,8 +16,8 @@ def handle_gold_price(content: str) -> str:
         return (
             f"金币价格查询 | {server}\n"
             f"时间：{data['date']}\n"
-            f"帖吧：{int(data['tieba'])}\n"
-            f"万宝楼：{int(data['wanbaolou'])}"
+            f"帖吧：{int(float(data['tieba']))}\n"
+            f"万宝楼：{int(float(data['wanbaolou']))}"
         )
     else:
         return f"无法获取【{server}】的金币价格，接口可能出错或区服名称不正确。"
