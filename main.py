@@ -4,6 +4,7 @@ from config_loader import get_bot_config
 from botpy.message import DirectMessage
 from botpy import logging
 
+import handlers.helpers as helper
 from handlers.open_server_handler import handle_open_server_query
 from handlers.calendar_handler import handle_calendar_query
 from handlers.qqshow_handler import handle_qqshow_query
@@ -83,26 +84,32 @@ class JX3BotClient(botpy.Client):
             
         elif cmd in ["技改"]:
             reply = await handle_skill_announce()
-            await self.api.post_dms(
+            await helper.safe_post_long_text(
+                api=self.api,
                 guild_id=message.guild_id,
                 msg_id=message.id,
-                content=reply["content"]
+                full_text=reply["content"],
+                prefix=reply["title"]
             )
             
         elif cmd in ["维护"]:
             reply = await handle_maintenance_announce()
-            await self.api.post_dms(
+            await helper.safe_post_long_text(
+                api=self.api,
                 guild_id=message.guild_id,
                 msg_id=message.id,
-                content=reply["content"]
+                full_text=reply["content"],
+                prefix=reply["title"]
             )
             
         elif cmd in ["公告"]:
             reply = await handle_news_announce()
-            await self.api.post_dms(
+            await helper.safe_post_long_text(
+                api=self.api,
                 guild_id=message.guild_id,
                 msg_id=message.id,
-                content=reply["content"]
+                full_text=reply["content"],
+                prefix=reply["title"]
             )
                 
                 

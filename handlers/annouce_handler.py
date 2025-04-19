@@ -1,7 +1,12 @@
 from jx3api import get_news_announce, get_maintenance_announce, get_skill_announce
 from playwright.async_api import async_playwright
+import re
 
 CLASS_NAME = "index-mainContainer-1IdO6"
+
+def clean_text(text: str) -> str:
+    text = re.sub(r'\x00', '', text)  # 删除 NULL 字符
+    return text.strip()
 
 async def _extract_text_from_element(url: str, class_name: str) -> str:
     async with async_playwright() as p:
