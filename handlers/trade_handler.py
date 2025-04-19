@@ -25,7 +25,15 @@ async def generate_trade_card(data: dict) -> bytes:
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("trade_card.html")
 
-    context = data
+    context = {
+        "server_name": "梦江南",
+        "item_name": data["data"]["name"],
+        "item_class": data["data"]["class"],
+        "item_subclass": data["data"]["subclass"],
+        "item_date": data["data"]["date"],
+        "item_view": data["data"]["view"],
+        "trade_list": data["data"]["data"]
+        }
 
     html = template.render(context)
     
