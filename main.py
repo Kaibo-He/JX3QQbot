@@ -107,6 +107,22 @@ class JX3BotClient(botpy.Client):
                 content=reply["content"]
             )   
                 
+        
+        elif cmd in ["/测试"]:
+            # 主动私聊发送消息
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                msg_id=None,  # 不引用原消息
+                content="✅ 测试私聊已收到！",
+                recipient_id=message.author.id  # 给你自己发
+            )
+            # 频道回复一条也可以
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                msg_id=message.id,
+                content="📩 正在尝试主动私聊你，请查收。"
+            )
+            
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
             await self.api.post_dms(
