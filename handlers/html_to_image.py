@@ -1,7 +1,7 @@
 from playwright.async_api import async_playwright
 
 # HTML 渲染为图片
-async def render_html_to_image(html: str, output_path: str):
+async def render_html_to_image(html: str, output_path: str, image_type: str = "png", quality: int = 100):
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page(viewport={"width": 960, "height": 1800})
