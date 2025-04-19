@@ -23,6 +23,8 @@ class JX3BotClient(botpy.Client):
     async def on_direct_message_create(self, message: DirectMessage):
         content = message.content.strip()
         cmd = content.strip().split()[0]
+        _log.info(f"原始消息内容: {repr(message.content)}")
+        _log.info(f"命令词提取结果: {cmd}")
 
         if cmd in ["开服"]:
             reply = handle_open_server_query(content)
@@ -115,12 +117,20 @@ class JX3BotClient(botpy.Client):
                 )
             
         elif cmd in ["公告"]:
-            reply = "hhhhhhhhhhhhhhhhhhhh"
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                content=reply,
-                msg_id=message.id,
-            )
+            reply = await handle_news_announce()
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
     
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
