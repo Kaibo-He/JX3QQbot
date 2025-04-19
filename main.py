@@ -84,34 +84,27 @@ class JX3BotClient(botpy.Client):
             
         elif cmd in ["技改"]:
             reply = await handle_skill_announce()
-            await helper.safe_post_long_text(
-                api=self.api,
+            await self.api.post_dms(
                 guild_id=message.guild_id,
+                content=reply,
                 msg_id=message.id,
-                full_text=reply["content"],
-                prefix=reply["title"]
             )
             
         elif cmd in ["维护"]:
             reply = await handle_maintenance_announce()
-            await helper.safe_post_long_text(
-                api=self.api,
+            await self.api.post_dms(
                 guild_id=message.guild_id,
+                content=reply,
                 msg_id=message.id,
-                full_text=reply["content"],
-                prefix=reply["title"]
             )
             
         elif cmd in ["公告"]:
             reply = await handle_news_announce()
-            await helper.safe_post_long_text(
-                api=self.api,
+            await self.api.post_dms(
                 guild_id=message.guild_id,
+                content=reply,
                 msg_id=message.id,
-                full_text=reply["content"],
-                prefix=reply["title"]
-            )
-                
+            )  
                 
                 
         else:
