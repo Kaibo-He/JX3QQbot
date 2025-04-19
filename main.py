@@ -96,6 +96,8 @@ class JX3BotClient(botpy.Client):
                     msg_id=message.id,
                     content=reply["content"]
                 )
+                
+                
     
         elif cmd in ["解密", "解谜"]:
             reply = get_current_quarter_result()
