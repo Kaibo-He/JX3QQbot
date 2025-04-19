@@ -129,6 +129,8 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
                 
+                
+                
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
             await self.api.post_dms(
