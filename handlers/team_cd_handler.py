@@ -25,6 +25,6 @@ def handle_team_cd_query(content: str) -> dict:
     for instance in data["data"]:
         boss_names = [b["name"] for b in instance["bossProgress"] if b["finished"]]
         bosses = "，".join(boss_names) if boss_names else "无击杀记录"
-        msg += f"♦︎{instance['mapName']}（{instance['mapType']}）：{bosses}\n"
+        msg += f"♦︎ {instance['mapName']}（{instance['mapType']}）：{bosses}\n"
 
     return {"content": msg.strip()}
