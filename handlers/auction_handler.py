@@ -20,9 +20,7 @@ async def generate_auction_card(server: str, keyword: str) -> bytes:
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
     # 缓存命中且未过期
     if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path) < CACHE_DURATION):
-        img = Path(cache_path).read_bytes()
-        os.remove(cache_path)
-        return img
+        return Path(cache_path).read_bytes()
     
     # 渲染
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
