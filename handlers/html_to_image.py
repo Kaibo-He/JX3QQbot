@@ -12,13 +12,22 @@ async def render_html_to_image(html: str, output_path: str):
 # HTML 中 element 渲染为图片
 async def render_element_to_image(url: str, class_name: str, output_path: str):
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
+        browser = await p.chromium.launch(args=["--no-sandbox"])
+        page = await browser.new_page(viewport={"width": 960, "height": 1800})
         await page.goto(url, wait_until="networkidle")
-        await page.wait_for_timeout(2000)
+        await page.wait_for_timeout(3000)
 
         # 等待该 class 出现
         await page.wait_for_selector(f".{class_name}", state="visible", timeout=10000)
+        await page.evaluate(f'''
+            () => {{
+                const el = document.querySelector(".{class_name}");
+                if (el) {{
+                    el.scrollIntoView({{ behavior: "instant", block: "center" }});
+                }}
+            }}
+        ''')
+        await page.wait_for_timeout(1000)
         element = await page.query_selector(f".{class_name}")
 
         # 获取该元素并截图
