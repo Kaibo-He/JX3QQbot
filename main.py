@@ -4,11 +4,6 @@ from config_loader import get_bot_config
 from botpy.message import DirectMessage
 from botpy import logging
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] [%(levelname)s] %(message)s',
-)
-
 from handlers.open_server_handler import handle_open_server_query
 from handlers.calendar_handler import handle_calendar_query
 from handlers.qqshow_handler import handle_qqshow_query
@@ -27,11 +22,9 @@ class JX3BotClient(botpy.Client):
         _log.info(f"机器人「{self.robot.name}」已上线")
 
     async def on_direct_message_create(self, message: DirectMessage):
-        print("触发成功！！！")
-        _log.info(f"收到消息内容：{repr(message.content)}")
+        _log.info(f"收到消息内容：{message.content}")
         content = message.content.strip()
         cmd = content.strip().split()[0]
-        _log.info(f"命令词提取结果: {cmd}")
 
         if cmd in ["开服"]:
             print(f"进入了判断：{cmd}")
