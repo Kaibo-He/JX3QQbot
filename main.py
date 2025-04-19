@@ -82,7 +82,7 @@ class JX3BotClient(botpy.Client):
                 content=reply["content"]
             )
             
-        elif cmd == "技改":
+        if cmd in ["技改"]:
             reply = await handle_skill_announce()
             if reply["file_image"]:
                 await self.api.post_dms(
@@ -98,7 +98,7 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
             
-        elif cmd == "公告":
+        if cmd in ["维护"]:
             reply = await handle_maintenance_announce()
             if reply["file_image"]:
                 await self.api.post_dms(
@@ -114,7 +114,7 @@ class JX3BotClient(botpy.Client):
                     content=reply["content"]
                 )
             
-        elif content.startswith("公告"):
+        if cmd in ["公告"]:
             reply = await handle_news_announce()
             if reply["file_image"]:
                 await self.api.post_dms(
