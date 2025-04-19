@@ -19,6 +19,7 @@ class JX3BotClient(botpy.Client):
         _log.info(f"机器人「{self.robot.name}」已上线")
 
     async def on_direct_message_create(self, message: DirectMessage):
+        _log.info(f"📩 收到私信: {message.content}")
         content = message.content.strip()
         cmd = content.strip().split()[0]
 
