@@ -12,7 +12,7 @@ def handle_gold_price(content: str) -> str:
         return "格式错误，如需查询金币价格请输入：\n金价/金币/买金 [区服]"
 
     data = get_gold_price(server)
-    if status:
+    if data:
         return (
             f"金币价格查询 | {server}\n"
             f"时间：{data['date']}\n"
