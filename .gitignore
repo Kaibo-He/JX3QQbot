@@ -1,7 +1,7 @@
 # 忽略 config.yaml（QQ Bot 凭据）
 config.yaml
 
-# 忽略 .env
+# 虚拟环境
 .env
 
 # Python 缓存
@@ -11,3 +11,11 @@ __pycache__/
 # VSCode/IDE
 .vscode/
 .idea/
+
+# 图片缓存
+/tmp/
+*.png
+
+# 日志文件
+*.log
+botpy.log

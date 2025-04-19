@@ -1,11 +1,10 @@
-import asyncio
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
-from playwright.async_api import async_playwright
 import os
 import hashlib
 import time
 from jx3api import get_role_attribute
+from html_to_image import render_html_to_image
 
 TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/equip_card.png"
@@ -13,17 +12,8 @@ CACHE_DIR = "/tmp/equip_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
 CACHE_DURATION = 60  # 缓存60秒
 
-# HTML 渲染为图片
-async def render_html_to_image(html: str, output_path: str):
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page(viewport={"width": 960, "height": 1800})
-        await page.set_content(html, wait_until="networkidle")
-        await page.screenshot(path=output_path, full_page=True)
-        await browser.close()
-
 # 接收角色数据，生成卡片图
-async def generate_role_equip_card(data: dict) -> bytes:
+async def _generate_role_equip_card(data: dict) -> bytes:
     # 缓存 key
     cache_key = hashlib.md5((data.get("roleName", "") + data.get("serverName", "")).encode()).hexdigest()
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
@@ -72,7 +62,7 @@ async def handle_role_attribute_card(content: str):
     if not data:
         return { "content": "⚠️ 无法获取角色属性信息", "file_image": None }
 
-    image = await generate_role_equip_card(data)
+    image = await _generate_role_equip_card(data)
     return {
         "content": f"{data['roleName']} 的装备详情如下：",
         "file_image": image

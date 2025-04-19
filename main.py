@@ -11,6 +11,7 @@ from handlers.qqshow_handler import handle_qqshow_query
 from handlers.role_attribute_handler import handle_role_attribute_card
 from handlers.team_cd_handler import handle_team_cd_query
 from handlers.yizhiku_handler import get_current_quarter_result
+from handlers.annouce_handler import handle_news_announce, handle_maintenance_announce, handle_skill_announce
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -80,6 +81,54 @@ class JX3BotClient(botpy.Client):
                 msg_id=message.id,
                 content=reply["content"]
             )
+            
+        elif content.startswith("技改"):
+            reply = await handle_skill_announce()
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
+            
+        elif content.startswith("维护"):
+            reply = await handle_maintenance_announce()
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
+            
+        elif content.startswith("公告"):
+            reply = await handle_news_announce()
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
     
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
