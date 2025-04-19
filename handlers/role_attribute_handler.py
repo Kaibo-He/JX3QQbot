@@ -4,7 +4,7 @@ import os
 import hashlib
 import time
 from jx3api import get_role_attribute
-from html_to_image import render_html_to_image
+from handlers.html_to_image import render_html_to_image
 
 TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/equip_card.png"
