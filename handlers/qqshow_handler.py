@@ -4,12 +4,15 @@ from jx3api import get_role_qqshow
 def handle_qqshow_query(content: str) -> str:
     parts = content.strip().split()
         
-    server = "梦江南"
     name = "王熙凤"
-    if len(parts) >= 3:
-        server = parts[2]
-    elif len(parts) == 2:
+    server = "梦江南"
+
+    if len(parts) == 2:
         name = parts[1]
+    elif len(parts) >= 3:
+        name = parts[1]
+        server = parts[2]
+
 
     result = get_role_qqshow(server=server, name=name)
     if not result:
