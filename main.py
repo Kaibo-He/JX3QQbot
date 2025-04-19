@@ -15,8 +15,6 @@ from handlers.annouce_handler import handle_news_announce, handle_maintenance_an
 config = get_bot_config()
 _log = logging.get_logger()
 
-
-
 class JX3BotClient(botpy.Client):
     async def on_ready(self):
         _log.info(f"机器人「{self.robot.name}」已上线")
