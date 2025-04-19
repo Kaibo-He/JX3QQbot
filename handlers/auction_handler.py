@@ -81,7 +81,8 @@ async def handle_auction_card(content: str):
     
     if len(parts) < 2:
         return {
-            "content": "请输入物品名称。"
+            "content": "请输入物品名称。",
+            "file_image": None
         }
         
     server = "梦江南"
