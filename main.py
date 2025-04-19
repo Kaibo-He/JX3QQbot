@@ -10,6 +10,7 @@ from handlers.role_attribute_handler import handle_role_attribute_card
 from handlers.team_cd_handler import handle_team_cd_query
 from handlers.yizhiku_handler import get_current_quarter_result
 from handlers.auction_handler import handle_auction_card
+from handlers.trade_handler import handle_trade_card
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -81,8 +82,22 @@ class JX3BotClient(botpy.Client):
             
         elif cmd in ["交易行", "拍卖行"]:
             reply = await handle_auction_card(content)
-            print("🪵 reply 内容：", reply)
-
+            if reply["file_image"]:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"],
+                    file_image=reply["file_image"]
+                )
+            else:
+                await self.api.post_dms(
+                    guild_id=message.guild_id,
+                    msg_id=message.id,
+                    content=reply["content"]
+                )
+                
+        elif cmd in ["物价", "外观"]:
+            reply = await handle_trade_card(content)
             if reply["file_image"]:
                 await self.api.post_dms(
                     guild_id=message.guild_id,

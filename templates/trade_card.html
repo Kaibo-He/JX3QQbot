@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>黑市物价</title>
+  <style>
+    body {
+      position: relative;
+      font-family: sans-serif;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #437363, #A8A8A8);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .bottom-img {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      z-index: 1;
+      height: auto;
+      display: block;
+      margin: 0;
+      padding: 0;
+      line-height: 0; 
+    }
+
+    .records,
+    .header {
+      position: relative;
+      z-index: 2;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .header .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header .title h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    .header .title p {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .records {
+      display: grid;
+      grid-template-columns: repeat(2, 430px);
+      grid-template-rows: repeat(3, 480px);
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .records-item {
+      background-color: rgba(217, 222, 216, 0.6);
+      border-radius: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 20px;
+      padding: 30px;
+    }
+
+    .item-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0D2A0E;
+    }
+
+    .divider {
+      height: 2px;
+      width: 65%;
+      background-color: white;
+      margin: 10px 0;
+      border: none;
+    }
+
+    .content-list {
+      margin-top: 10px;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 8px 5px;
+      text-align: center;
+    }
+    
+    .info {
+      font-size: 21px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .date-cell {
+      font-size: 20px;
+      letter-spacing: -1px;
+    }
+
+    .value-cell {
+      font-weight: bold;
+    }
+
+    .sales-3 { color: #312B9F; }   /* 想出 */
+    .sales-4 { color: #B15A28; }   /* 想收 */
+    .sales-5 { color: #FFFFFF; }   /* 成交 */
+    .sales-6 { color: #285114; }   /* 在售 */
+    .sales-7 { color: #A62729; }   /* 公示 */
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <h1>{{ item_name }}</h1>
+      <p>{{ item_class }} · {{ item_subclass }} · {{ item_date }}</p>
+    </div>
+  </div>
+
+  <div class="records">
+    <div class="records-item">
+      <div class="item-title">万宝楼 · 公示</div>
+      <hr class="divider">
+      <table class="content-list">
+        {% for trade in trade_list[3]%}
+        <tr class="info sales-{{ trade.sales }}">
+          <td>{{ trade.server }}</td>
+          <td>
+            {% if trade.sales == 3 %}
+            想出
+            {% elif trade.sales == 4 %}
+            想收
+            {% elif trade.sales == 5 %}
+            成交
+            {% elif trade.sales == 6 %}
+            在售
+            {% elif trade.sales == 7 %}
+            公示
+            {% else %}
+
+            {% endif %}
+          </td>
+          <td class="value-cell">{{ trade.value }}</td>
+          <td class="date-cell">{{ trade.date }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="records-item">
+      <div class="item-title">万宝楼 · 在售</div>
+      <hr class="divider">
+      <table class="content-list">
+        {% for trade in trade_list[4]%}
+        <tr class="info sales-{{ trade.sales }}">
+          <td>{{ trade.server }}</td>
+          <td>
+            {% if trade.sales == 3 %}
+            想出
+            {% elif trade.sales == 4 %}
+            想收
+            {% elif trade.sales == 5 %}
+            成交
+            {% elif trade.sales == 6 %}
+            在售
+            {% elif trade.sales == 7 %}
+            公示
+            {% else %}
+            
+            {% endif %}
+          </td>
+          <td class="value-cell">{{ trade.value }}</td>
+          <td class="date-cell">{{ trade.date }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="records-item">
+      <div class="item-title">电信区 · 概览</div>
+      <hr class="divider">
+      <table class="content-list">
+        {% for trade in trade_list[0]%}
+        <tr class="info sales-{{ trade.sales }}">
+          <td>{{ trade.server }}</td>
+          <td>
+            {% if trade.sales == 3 %}
+            想出
+            {% elif trade.sales == 4 %}
+            想收
+            {% elif trade.sales == 5 %}
+            成交
+            {% elif trade.sales == 6 %}
+            在售
+            {% elif trade.sales == 7 %}
+            公示
+            {% else %}
+            
+            {% endif %}
+          </td>
+          <td class="value-cell">{{ trade.value }}</td>
+          <td class="date-cell">{{ trade.date }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="records-item">
+      <div class="item-title">双线区 · 概览</div>
+      <hr class="divider">
+      <table class="content-list">
+        {% for trade in trade_list[1]%}
+        <tr class="info sales-{{ trade.sales }}">
+          <td>{{ trade.server }}</td>
+          <td>
+            {% if trade.sales == 3 %}
+            想出
+            {% elif trade.sales == 4 %}
+            想收
+            {% elif trade.sales == 5 %}
+            成交
+            {% elif trade.sales == 6 %}
+            在售
+            {% elif trade.sales == 7 %}
+            公示
+            {% else %}
+            
+            {% endif %}
+          </td>
+          <td class="value-cell">{{ trade.value }}</td>
+          <td class="date-cell">{{ trade.date }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="records-item">
+      <div class="item-title">无界区 · 概览</div>
+      <hr class="divider">
+      <table class="content-list">
+        {% for trade in trade_list[2]%}
+        <tr class="info sales-{{ trade.sales }}">
+          <td>{{ trade.server }}</td>
+          <td>
+            {% if trade.sales == 3 %}
+            想出
+            {% elif trade.sales == 4 %}
+            想收
+            {% elif trade.sales == 5 %}
+            成交
+            {% elif trade.sales == 6 %}
+            在售
+            {% elif trade.sales == 7 %}
+            公示
+            {% else %}
+            
+            {% endif %}
+          </td>
+          <td class="value-cell">{{ trade.value }}</td>
+          <td class="date-cell">{{ trade.date }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="records-item">
+      <div class="item-title">{{ server_name }} · 概览</div>
+      <hr class="divider">
+      <table class="content-list">
+        {% for trade in trade_list[5]%}
+        <tr class="info sales-{{ trade.sales }}">
+          <td>{{ trade.server }}</td>
+          <td>
+            {% if trade.sales == 3 %}
+            想出
+            {% elif trade.sales == 4 %}
+            想收
+            {% elif trade.sales == 5 %}
+            成交
+            {% elif trade.sales == 6 %}
+            在售
+            {% elif trade.sales == 7 %}
+            公示
+            {% else %}
+            
+            {% endif %}
+          </td>
+          <td class="value-cell">{{ trade.value }}</td>
+          <td class="date-cell">{{ trade.date }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  
+  <img class="bottom-img" src="{{ item_view }}">
+
+</body>
+</html>
