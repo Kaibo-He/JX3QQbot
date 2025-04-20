@@ -6,8 +6,6 @@ from botpy.message import DirectMessage
 from botpy import logging
 
 from handlers.command_map import command_map
-from session_manager import is_in_session, cleanup_sessions
-from handlers.achievement_handler import handle_role_achievement 
 
 config = get_bot_config()
 _log = logging.get_logger()
