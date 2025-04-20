@@ -21,7 +21,6 @@ __pycache__/
 
 # 图片缓存
 /tmp/
-*.png
 
 # 日志文件
 *.log
