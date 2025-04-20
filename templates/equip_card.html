@@ -216,4 +216,30 @@
 
   
 </body>
+
+<script>
+  // 等待所有图片加载或失败，再设置 window.ready = true
+  const imgs = Array.from(document.images);
+  let loaded = 0;
+
+  function check() {
+    loaded++;
+    if (loaded === imgs.length) {
+      window.ready = true;
+    }
+  }
+
+  imgs.forEach(img => {
+    if (img.complete) {
+      check();
+    } else {
+      img.onload = check;
+      img.onerror = check;
+    }
+  });
+
+  if (imgs.length === 0) {
+    window.ready = true;
+  }
+</script>
 </html>

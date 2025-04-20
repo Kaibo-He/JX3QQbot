@@ -37,7 +37,8 @@ async def render_html_to_image(html: str, output_path: str):
 
         page = await _context.new_page()
         file_url = f"file://{html_path}"
-        await page.goto(file_url, wait_until="networkidle")
+        await page.goto(file_url, wait_until="load")
+        await page.wait_for_function("window.ready === true", timeout=60000)
         await page.screenshot(path=output_path, full_page=True)
         await page.close()
 
