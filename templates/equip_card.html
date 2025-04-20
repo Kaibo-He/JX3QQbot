@@ -67,6 +67,11 @@
       width: 100%;
     }
 
+    .stars {
+      color: #FFE605;
+      font-size: 30px;
+    }
+
     .equip .details-left {
       text-align: left;
     }
@@ -96,16 +101,43 @@
       font-size: 20px;
       font-weight: bold;
       color: #E13CB8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
+    .equip .details .colorStone img {
+      width: 26px;
+      height: 26px;
+      object-fit: cover;  
+      border-radius: 5px; 
     }
 
     .equip .details .enchant{
       font-size: 20px;
       font-weight: bold;
       color: #1655C3;
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+
+    .equip .details .enchant img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;  
+      border-radius: 6px; 
     }
 
     .equip .details .common{
-      margin-right: 10px;     
+      font-size: 20px;
+      font-weight: bold;
+      color: #DA5935;
+      display: flex;
+      align-items: center;
+      gap: 13px;  
+      margin-right: 10px;
     }
 
     .equip .details .common img {
@@ -175,7 +207,7 @@
           <div class="name">
             {{ equip.name }} · {{ equip.quality }}
             {% if equip.strengthLevel %}
-             · {{ '⭐' * (equip.strengthLevel|int) }}
+             · <span class="stars">{{ '★' * (equip.strengthLevel|int) }}</span>
             {% endif %}
           </div>
           <div class="modifys">
@@ -216,30 +248,4 @@
 
   
 </body>
-
-<script>
-  // 等待所有图片加载或失败，再设置 window.ready = true
-  const imgs = Array.from(document.images);
-  let loaded = 0;
-
-  function check() {
-    loaded++;
-    if (loaded === imgs.length) {
-      window.ready = true;
-    }
-  }
-
-  imgs.forEach(img => {
-    if (img.complete) {
-      check();
-    } else {
-      img.onload = check;
-      img.onerror = check;
-    }
-  });
-
-  if (imgs.length === 0) {
-    window.ready = true;
-  }
-</script>
 </html>
