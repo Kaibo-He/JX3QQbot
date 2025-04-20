@@ -6,6 +6,8 @@ from botpy.message import DirectMessage
 from botpy import logging
 
 from handlers.command_map import command_map
+from session_manager import is_in_session, cleanup_sessions
+from handlers.achievement_handler import handle_role_achievement 
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -18,11 +20,24 @@ class JX3BotClient(botpy.Client):
         _log.info(f"📩 收到私信: {message.content}")
         content = message.content.strip()
         cmd = content.strip().split()[0]
+        user_id = message.author.id
+        
+        # 优先检查是否处于会话中
+        if is_in_session(user_id):
+            reply = await handle_role_achievement(content, user_id=user_id)
+            await self.api.post_dms(
+                guild_id=message.guild_id,
+                msg_id=message.id,
+                content=reply
+            )
+            return
         
         handler = command_map.get(cmd)
         if handler:   
             if inspect.iscoroutinefunction(handler):
                 reply = await handler(content)
+            elif cmd == "资历":
+                reply = await handler(content, user_id=user_id)
             else:
                 reply = handler(content)
             
