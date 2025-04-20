@@ -175,7 +175,7 @@
           <div class="name">
             {{ equip.name }} · {{ equip.quality }}
             {% if equip.strengthLevel %}
-             · {{ '⭐' * equip.strengthLevel }}
+             · {{ '⭐' * (equip.strengthLevel|int) }}
             {% endif %}
           </div>
           <div class="modifys">
