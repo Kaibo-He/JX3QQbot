@@ -7,7 +7,7 @@ import time
 
 from config import DEFAULT_SERVER
 from api.jx3api import get_role_achievement
-from utils.html_to_image import render_html_to_image
+from utils.html_to_image import render_html_to_adapted_image
 
 TEMPLATE_DIR = "templates"
 OUTPUT_PATH_1 = "/tmp/achievement_total.png"
@@ -59,7 +59,7 @@ async def generate_achievement_total_card(data: dict) -> bytes:
     }
 
     html = template.render(context)
-    await render_html_to_image(html, cache_path)
+    await render_html_to_adapted_image(html, cache_path)
     
     return Path(cache_path).read_bytes()
 
@@ -100,7 +100,7 @@ async def generate_achievement_map_card(data: dict) -> bytes:
     }
 
     html = template.render(context)
-    await render_html_to_image(html, cache_path)
+    await render_html_to_adapted_image(html, cache_path)
     
     return Path(cache_path).read_bytes()
 
@@ -126,7 +126,7 @@ async def generate_achievement_dungeons_card(data: dict) -> bytes:
     }
 
     html = template.render(context)
-    await render_html_to_image(html, cache_path)
+    await render_html_to_adapted_image(html, cache_path)
     
     return Path(cache_path).read_bytes()
 
