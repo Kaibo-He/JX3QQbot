@@ -43,6 +43,7 @@ class JX3BotClient(botpy.Client):
                 msg_id=message.id,
             )
 
+
 if __name__ == "__main__":
     intents = botpy.Intents(direct_message=True, public_guild_messages=True)
     client = JX3BotClient(intents=intents)
