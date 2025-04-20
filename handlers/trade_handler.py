@@ -18,7 +18,7 @@ CACHE_DURATION = 60  # 缓存60秒
 # 接收角色数据，生成图片
 async def generate_trade_card(data: dict) -> bytes:
     # 缓存 key
-    cache_key = hashlib.md5((data.get("roleName", "") + data.get("serverName", "")).encode()).hexdigest()
+    cache_key = hashlib.md5((data.get("name", "") + data.get("alias", "")).encode()).hexdigest()
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
     # 缓存命中且未过期
     if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path) < CACHE_DURATION):
@@ -29,8 +29,9 @@ async def generate_trade_card(data: dict) -> bytes:
     template = env.get_template("trade_card.html")
 
     context = {
-        "server_name": "梦江南",
+        "server_name": data["data"][5][0]["server"],
         "item_name": data["name"],
+        "item_alias": data["alias"],
         "item_class": data["class"],
         "item_subclass": data["subclass"],
         "item_date": data["date"],
