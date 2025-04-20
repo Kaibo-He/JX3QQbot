@@ -19,7 +19,7 @@ CACHE_DURATION = 60  # 缓存60秒
 
 async def generate_achievement_total_card(data: dict) -> bytes:
     # 缓存 key
-    cache_key = hashlib.md5((data.get("role_name", "") + data.get("server_name", "")) + "total".encode()).hexdigest()
+    cache_key = hashlib.md5((data.get("role_name", "") + data.get("server_name", "") + "total").encode()).hexdigest()
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
     # 缓存命中且未过期
     if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path) < CACHE_DURATION):
@@ -65,7 +65,7 @@ async def generate_achievement_total_card(data: dict) -> bytes:
 
 async def generate_achievement_map_card(data: dict) -> bytes:
     # 缓存 key
-    cache_key = hashlib.md5((data.get("role_name", "") + data.get("server_name", "")) + "map".encode()).hexdigest()
+    cache_key = hashlib.md5((data.get("role_name", "") + data.get("server_name", "") + "map").encode()).hexdigest()
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
     # 缓存命中且未过期
     if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path) < CACHE_DURATION):
@@ -106,7 +106,7 @@ async def generate_achievement_map_card(data: dict) -> bytes:
 
 async def generate_achievement_dungeons_card(data: dict) -> bytes:
     # 缓存 key
-    cache_key = hashlib.md5((data.get("role_name", "") + data.get("server_name", "")) + "dungeons".encode()).hexdigest()
+    cache_key = hashlib.md5((data.get("role_name", "") + data.get("server_name", "") + "dungeons").encode()).hexdigest()
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
     # 缓存命中且未过期
     if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path) < CACHE_DURATION):
