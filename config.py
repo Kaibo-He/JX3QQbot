@@ -39,6 +39,25 @@ KUNGFU_ICON_MAP = {
     "周天功": os.path.join(KUNGFU_ICON_DIR, "周天功.png"),
     "未知心法": os.path.join(KUNGFU_ICON_DIR, "未知心法.png")
 }
+
+EQUIP_ICON_DIR = os.path.join(BASE_DIR, "assets", "equip")
+FIVESTONE_ICON_DIR = os.path.join(EQUIP_ICON_DIR, "assets", "fivestone")
+ENCHANT_ICON_DIR = os.path.join(EQUIP_ICON_DIR, "assets", "enchant")
+FIVESTONE_MAP = {
+    "五行石（一级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（二级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（三级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（四级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（五级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（六级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（七级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（八级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+}
+ENCHANT_MAP = {
+    "common": os.path.join(ENCHANT_ICON_DIR, "common-enchant.png"),
+    "permanent": os.path.join(ENCHANT_ICON_DIR, "permanent-enchant.png")
+}
+
 LUCK_DICT = {
     "绝世": [
         "孤沙影寂", "昆吾余火", "浮光织梦", "塞外西风", "入蛟宫", 

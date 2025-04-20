@@ -189,13 +189,13 @@
           <div class="enchant">
             {% for ench in equip.permanentEnchant %}
             {{ ench.name }}
-            <img src="{{ equip.permanentEnchant.icon }}" onerror="this.style.display='none'">
+            <img src="{{ permanent_icon }}" onerror="this.style.display='none'">
             {% endfor %}
           </div>
           <div class="common">
             {% if equip.commonEnchant %}
             {{ equip.commonEnchant.name }}
-            <img src="{{ equip.commonEnchant.icon }}" onerror="this.style.display='none'">
+            <img src="{{ common_icon }}" onerror="this.style.display='none'">
             {% endif %}
           </div>
           <div class="stones">

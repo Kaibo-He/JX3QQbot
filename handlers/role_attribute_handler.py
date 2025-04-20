@@ -5,7 +5,7 @@ import os
 import hashlib
 import time
 
-from config import DEFAULT_SERVER, KUNGFU_ICON_MAP
+from config import DEFAULT_SERVER, KUNGFU_ICON_MAP, FIVESTONE_MAP, ENCHANT_MAP
 from api.jx3api import get_role_attribute
 from utils.html_to_image import render_html_to_image
 
@@ -34,6 +34,12 @@ async def generate_role_equip_card(data: dict) -> bytes:
     kungfu_name_raw = data.get("kungfuName", "未知心法")
     kungfu_name = normalize_kungfu_name(kungfu_name_raw)
     kungfu_icon_url = KUNGFU_ICON_MAP.get(kungfu_name)
+    
+    for equip in data.get("equipList", []):
+        for stone in equip.get("fiveStone", []):
+            name = stone.get("name")
+            if name and name in FIVESTONE_MAP:
+                stone["icon"] = FIVESTONE_MAP[name]
 
     context = {
         "role_name": data.get("roleName", "未知角色"),
@@ -44,7 +50,9 @@ async def generate_role_equip_card(data: dict) -> bytes:
         "server_name": data.get("serverName", "未知区服"),
         "score": data.get("panelList", {}).get("score", 0),
         "equipList": data.get("equipList", []),
-        "panelList": data.get("panelList", {"panel": []})
+        "panelList": data.get("panelList", {"panel": []}),
+        "common_icon": ENCHANT_MAP.get("common"),
+        "permanent_icon": ENCHANT_MAP.get("permanent")
     }
 
     html = template.render(context)
