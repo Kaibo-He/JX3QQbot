@@ -41,8 +41,8 @@ class JX3BotClient(botpy.Client):
                         guild_id=message.guild_id,
                         msg_id=message.id,
                         content=r.get("content", ""),
-                        file_image=reply.get("file_image"),
-                        image=reply.get("image")
+                        file_image=r.get("file_image"),
+                        image=r.get("image")
                     )
             elif isinstance(reply, str):
                 await self.api.post_dms(
