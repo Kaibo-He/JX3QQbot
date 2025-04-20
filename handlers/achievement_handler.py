@@ -14,12 +14,12 @@ async def handle_role_achievement(content: str, user_id=None):
     if not is_valid_input(input_text):
         return "❌ 无效选项，请输入 1-4 之一。"
 
-    if input_text == "1":
+    if input_text == "11":
         return "✅ 回复 a\n\n🎖️ 请选择二级功能：\n1. 回复 a\n2. 回复 b\n3. 回复 c\n4. 退出"
-    elif input_text == "2":
+    elif input_text == "22":
         return "✅ 回复 b\n\n🎖️ 请选择二级功能：\n1. 回复 a\n2. 回复 b\n3. 回复 c\n4. 退出"
-    elif input_text == "3":
+    elif input_text == "33":
         return "✅ 回复 c\n\n🎖️ 请选择二级功能：\n1. 回复 a\n2. 回复 b\n3. 回复 c\n4. 退出"
-    elif input_text == "4":
+    elif input_text == "44":
         end_session(user_id)
         return "✅ 已退出「资历」会话。"
