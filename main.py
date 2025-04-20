@@ -1,3 +1,5 @@
+# main.py
+import inspect
 import botpy
 from config_loader import get_bot_config
 from botpy.message import DirectMessage
@@ -19,7 +21,10 @@ class JX3BotClient(botpy.Client):
         
         handler = command_map.get(cmd)
         if handler:   
-            reply = await handler(content) if callable(handler) and hasattr(handler, "__await__") else handler(content)
+            if inspect.iscoroutinefunction(handler):
+                reply = await handler(content)
+            else:
+                reply = handler(content)
             
             if isinstance(reply, dict):
                 await self.api.post_dms(
