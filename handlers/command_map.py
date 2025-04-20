@@ -30,5 +30,6 @@ command_map = {
     "买金": handle_gold_price,
     "解密": get_current_quarter_result,
     "解谜": get_current_quarter_result,
-    "资历": handle_role_achievement
+    "资历": handle_role_achievement,
+    "资历分布": handle_role_achievement
 }

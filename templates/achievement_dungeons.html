@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>资历总览</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #437363, #A8A8A8);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      padding: 0 30px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+      margin-bottom: 10px;
+      color: white;
+      flex-direction: column;
+    }
+
+    .header .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .header .title h1 {
+      font-size: 32px;
+      text-shadow: 0 0 10px #022F0B;
+    }
+
+    .header .title p {
+      font-size: 24px;
+      text-shadow: 0 0 10px #022F0B;
+    }
+
+    .divider {
+      background-color: white;
+      height: 1px;
+      width: 90%;
+    }
+
+    .type-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 20px;
+    }
+
+    .type-item {
+      background-color: rgba(11, 51, 37, 0.8);
+      border-radius: 30px;
+      display: flex;
+      width: 850px;
+      height: auto;
+      padding: 10px 15px;
+      align-items: center;
+    }
+
+    .type-name {
+      font-size: 32px;
+      color: white;
+      text-shadow: 0 0 5px #FFFD77;
+      text-align: center;
+      margin-left: 10px;
+      margin-right: 20px;
+      width: 150px;
+    }
+
+    .type-info {
+      display: flex;
+      flex-direction: column;
+      width: 700px;
+    }
+
+    .type-score {
+      display: flex;
+      font-size: 28px;
+      color: white;
+      text-shadow: 0 0 5px #FFFD77;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    .progress-bar {
+      height: 3px;
+      background-color: #FF02FB;
+      border-radius: 100px;
+      width: 0%;
+      margin: 1px;
+      box-sizing: border-box;
+    }
+
+    .progress-container {
+      width: 100%;
+      background-color: #437241;
+      border-radius: 100px;
+      overflow: hidden;
+      height: 5px;
+      margin: 6px 0;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <h1>{{ role_name }} | 资历总览 · 秘境</h1>
+      <p>{{ server_name }}</p>
+    </div>
+  </div>
+
+  <div class="type-list">
+    {% for type, stats in type_list.items() %}
+    <div class="type-item">
+      <div class="type-name">{{ type }}</div>
+      <div class="type-info">
+        {% for level, data in stats.items() %}
+        <div class="type-score">
+          <div class="level-name">{{level}}</div>
+          <div class="seniority">♜{{ data.seniority.speed }}/{{ data.seniority.total }}</div>
+          <div class="pieces">★{{ data.pieces.speed }}/{{ data.pieces.total }}</div>
+          {% set percent = (data.pieces.speed / data.pieces.total * 100) | round(2) %}
+          <div class="type-percent">{{ percent }}%</div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar" 
+          style="width: {{ percent }}%;
+       background-color: 
+       {% if percent == 100 %}#FFDA0C
+       {% elif percent >= 75 %}#FF02FB
+       {% elif percent >= 40 %}#0CBAFF
+       {% else %}#0CFF75
+       {% endif %};"></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

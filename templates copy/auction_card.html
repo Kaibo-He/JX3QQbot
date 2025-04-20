@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>交易行物价</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #437363, #A8A8A8);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .header .title h1 {
+      margin: 0;
+      font-size: 32px;
+      text-shadow: 0 0 10px #022F0B;
+    }
+
+    .records {
+      margin-bottom: 50px;
+      background-color: rgba(217, 222, 216, 0.3);
+      border-radius: 20px;
+      justify-content: center;
+      height: 90%;
+      padding: 20px;
+    }
+
+    .records table{
+      width: 95%;
+      border-collapse: collapse;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .records th {
+      font-size: 24px;
+      justify-content: center;
+    }
+
+    .records tr.divider td {
+      padding: 10px;
+      height: 1px;
+    }
+    
+    .records tr.divider td::before {
+      content: "";
+      display: block;
+      width: 95%;
+      margin: 0 auto;
+      height: 1px;
+      background-color: white;
+    }
+
+    .records tr:first-child th {
+      padding-bottom: 30px;
+    }
+
+    .records td, .records th {
+      padding: 12px 10px;
+    }
+
+    .info {
+      font-size: 20px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .item-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .item-0 { font-weight: bold; color: #444444; }
+    .item-1 { font-weight: bold; color: #ffffff; }
+    .item-2 { font-weight: bold; color: #00d24b; }
+    .item-3 { font-weight: bold; color: #007eff; }
+    .item-4 { font-weight: bold; color: #fe2dfe; }
+    .item-5 { font-weight: bold; color: #FFB833; }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <h1>交易行 | {{ server_name }}</h1>
+    </div>
+  </div>
+
+  <div class="records">
+    <table>
+      <tr>
+        <th>⭐</th>
+        <th>物品</th>
+        <th>30日最高价</th>
+        <th>30日最低价</th>
+        <th>最新价格</th>
+        <th>上架时间</th>
+      </tr>
+      {% for item in item_list %}
+      <tr>
+        <td class="icon">
+          <img class="item-icon" src="{{ item.icon }}">
+        </td>
+        <td class="info {{ item.color }}">{{ item.name }}</td>
+        <td class="info">{{ item.high|safe }}</td>
+        <td class="info">{{ item.low|safe }}</td>
+        <td class="info">{{ item.new|safe }}</td>
+        <td class="info">{{ item.time }}</td>
+      </tr>
+      <tr class="divider">
+        <td colspan="6"></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  
+</body>
+</html>

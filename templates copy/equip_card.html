@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>角色装备展示卡</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to bottom, #437363, #A8A8A8);
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .header .info h1 {
+        margin: 0;
+        font-size: 32px;
+        margin-bottom: 30px;
+        text-shadow: 0 0 10px #022F0B;
+      }
+      
+    .header .info p {
+        margin: 4px 0;
+        font-size: 24px;
+        text-shadow: 0 0 10px #022F0B;
+    }
+
+    .kungfu-icon {
+        margin-right: 10px;
+        width: 100px;
+        height: 100px;
+        border: none;
+    }
+
+    .equip-list {
+      margin-bottom: 50px;
+    }
+
+    .equip {
+      display: flex;
+      padding: 8px 0;
+      background-color: rgba(217, 222, 216, 0.51);
+      border-radius: 20px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    .equip img.icon {
+      width: 100px;
+      height: 100px;
+      margin-left: 10px;
+      margin-right: 10px;
+      border-radius: 15px;
+    }
+
+    .equip .details {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .equip .details-left {
+      text-align: left;
+    }
+    
+    .equip .details-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      text-align: right;
+      gap: 4px; 
+    }
+
+    .equip .details .name {
+      font-weight: bold;
+      font-size: 24px;
+      color: #041608;
+    }
+
+    .equip .details .modifys {
+      font-size: 20px;
+      font-weight: bold;
+      color: #1F4B1D;
+    }
+
+    .equip .details .colorStone {
+      font-size: 20px;
+      font-weight: bold;
+      color: #E13CB8;
+    }
+
+    .equip .details .enchant{
+      font-size: 20px;
+      font-weight: bold;
+      color: #1655C3;
+    }
+
+    .equip .details .common{
+      margin-right: 10px;     
+    }
+
+    .equip .details .common img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;  
+      border-radius: 6px; 
+    }
+
+    .equip .details .stones{
+      margin-right: 10px;
+    }
+
+    .equip .details .stones img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 6px; 
+    }
+
+    .panel {
+      padding-top: 0px;
+      background-color: #1F3432;
+      border-radius: 20px;
+      border: 2px solid #8EF7CE;
+      padding: 32px;
+    }
+    .panel-row {
+      display: flex;
+      flex-wrap: wrap;
+      color: white;
+      text-shadow: 0 0 10px rgba(217, 220, 124, 0.63);
+    }
+    .panel-item {
+      width: 33.333333%;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="info">
+      <h1>{{ role_name }} | 装备分数：{{ score }}</h1>
+      <p>{{ force_name }} · {{ kungfu_name }}</p>
+      <p>{{ zone_name }} @ {{ server_name }}</p>
+    </div>
+    <img class="kungfu-icon" src="{{ kungfu_icon }}">
+  </div>
+
+  <div class="panel">
+    <div class="panel-row">
+      {% for stat in panelList.panel %}
+      <div class="panel-item">
+        {{ stat.name }}：{{ stat.value }}{% if stat.percent %}%{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="equip-list">
+    {% for equip in equipList %}
+    <div class="equip">
+      <img class="icon" src="{{ equip.icon }}">
+      <div class="details">
+        <div class="details-left">
+          <div class="name">{{ equip.name }} · {{ equip.quality }} {% if equip.strengthLevel %} + {{ equip.strengthLevel }}{% endif %}</div>
+          <div class="modifys">
+            {% for modify in equip.modifyType %}
+            {{ modify.name }} 
+            {% endfor %}
+          </div>
+          <div class="colorStone">
+            {% if equip.colorStone %}
+            {{ equip.colorStone.name }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="details-right">
+          <div class="enchant">
+            {% for ench in equip.permanentEnchant %}
+            {{ ench.name }} 
+            {% endfor %}
+          </div>
+          <div class="common">
+            {% if equip.commonEnchant %}
+            <img src="{{ equip.commonEnchant.icon }}">
+            {% endif %}
+          </div>
+          <div class="stones">
+            {% for stone in equip.fiveStone %}
+            <img src="{{ stone.icon }}">
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  
+</body>
+</html>

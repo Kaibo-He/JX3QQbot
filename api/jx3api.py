@@ -207,3 +207,35 @@ def get_gold_price(server: str):
     except Exception as e:
         print("Error fetching calendar:", e)
         return None
+    
+# 资历分布
+def get_role_achievement(server: str, name: str):
+    url = "https://www.jx3api.com/data/tuilan/achievement"
+    auth = get_jx3api_auth()
+    
+    payload = {
+        "server": server,
+        "name": name,
+        "class": 1,
+        "ticket": auth["ticket"],
+        "token": auth["token"]
+    }
+    
+    try:
+        session = requests.Session()
+        retry_strategy = Retry(total=2, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        session.mount("https://", adapter)
+
+        res = session.post(url, json=payload, timeout=20)
+        if res.status_code != 200:
+            return None
+
+        result = res.json()
+        if result.get("code") != 200 or "data" not in result:
+            return None
+
+        return result["data"]
+    except Exception as e:
+        print("Error fetching role attribute:", e)
+        return None

@@ -35,9 +35,7 @@ class JX3BotClient(botpy.Client):
         handler = command_map.get(cmd)
         if handler:   
             
-            if cmd == "资历":
-                reply = await handler(content, user_id=user_id)
-            elif inspect.iscoroutinefunction(handler):
+            if inspect.iscoroutinefunction(handler):
                 reply = await handler(content)
             else:
                 reply = handler(content)
@@ -50,6 +48,15 @@ class JX3BotClient(botpy.Client):
                     file_image=reply.get("file_image"),
                     image=reply.get("image")
                 )
+            elif isinstance(reply, list):
+                for r in reply:
+                    await self.api.post_dms(
+                        guild_id=message.guild_id,
+                        msg_id=message.id,
+                        content=r.get("content", ""),
+                        file_image=reply.get("file_image"),
+                        image=reply.get("image")
+                    )
             elif isinstance(reply, str):
                 await self.api.post_dms(
                     guild_id=message.guild_id,
