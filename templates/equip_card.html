@@ -14,18 +14,29 @@
     .header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding-bottom: 20px;
       margin-bottom: 20px;
       color: white;
     }
 
     .header .info h1 {
-      margin: 0;
-      font-size: 32px;
-    }
+        margin: 0;
+        font-size: 32px;
+        margin-bottom: 30px;
+        text-shadow: 0 0 10px #022F0B;
+      }
+      
     .header .info p {
-      margin: 4px 0;
-      font-size: 24px;
+        margin: 4px 0;
+        font-size: 24px;
+        text-shadow: 0 0 10px #022F0B;
+    }
+
+    .kungfu-icon {
+        margin-right: 10px;
+        width: 100px;
+        height: 100px;
     }
 
     .equip-list {
@@ -124,11 +135,13 @@
     .panel-row {
       display: flex;
       flex-wrap: wrap;
-      color: white
+      color: white;
+      text-shadow: 0 0 10px rgba(217, 220, 124, 0.63);
     }
     .panel-item {
-      width: 30%;
+      width: 33.333333%;
       font-size: 24px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -139,6 +152,7 @@
       <p>{{ force_name }} · {{ kungfu_name }}</p>
       <p>{{ zone_name }} @ {{ server_name }}</p>
     </div>
+    <img class="kungfu-icon" src="{{ kungfu_icon }}">
   </div>
 
   <div class="panel">

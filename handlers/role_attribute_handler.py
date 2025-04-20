@@ -5,7 +5,7 @@ import os
 import hashlib
 import time
 
-from config import DEFAULT_SERVER
+from config import DEFAULT_SERVER, KUNGFU_ICON_MAP
 from api.jx3api import get_role_attribute
 from utils.html_to_image import render_html_to_image
 
@@ -27,10 +27,18 @@ async def generate_role_equip_card(data: dict) -> bytes:
     # 渲染
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("equip_card.html")
+    
+    def normalize_kungfu_name(name: str) -> str:
+        return name.split("·")[0].strip()
+    
+    kungfu_name_raw = data.get("kungfuName", "未知心法")
+    kungfu_name = normalize_kungfu_name(kungfu_name_raw)
+    kungfu_icon_url = KUNGFU_ICON_MAP.get(kungfu_name)
 
     context = {
         "role_name": data.get("roleName", "未知角色"),
-        "kungfu_name": data.get("kungfuName", "未知心法"),
+        "kungfu_name": kungfu_name_raw,
+        "kungfu_icon": kungfu_icon_url,
         "force_name": data.get("forceName", "未知门派"),
         "zone_name": data.get("zoneName", "未知区服"),
         "server_name": data.get("serverName", "未知区服"),
