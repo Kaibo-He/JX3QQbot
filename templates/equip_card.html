@@ -172,7 +172,12 @@
       <img class="icon" src="{{ equip.icon }}" onerror="this.style.display='none'">
       <div class="details">
         <div class="details-left">
-          <div class="name">{{ equip.name }} · {{ equip.quality }} {% if equip.strengthLevel %} + {{ equip.strengthLevel }}{% endif %}</div>
+          <div class="name">
+            {{ equip.name }} · {{ equip.quality }}
+            {% if equip.strengthLevel %}
+             · {{ '⭐' * equip.strengthLevel }}
+            {% endif %}
+          </div>
           <div class="modifys">
             {% for modify in equip.modifyType %}
             {{ modify.name }} 
