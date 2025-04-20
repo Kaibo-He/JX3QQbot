@@ -4,10 +4,6 @@ from botpy.message import DirectMessage
 from botpy import logging
 
 from handlers.command_map import command_map
-from session_manager import (
-    is_in_session, start_session, get_session, refresh_session,
-    end_session, cleanup_sessions, is_valid_input
-)
 
 config = get_bot_config()
 _log = logging.get_logger()
