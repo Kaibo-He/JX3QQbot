@@ -40,9 +40,8 @@ KUNGFU_ICON_MAP = {
     "未知心法": os.path.join(KUNGFU_ICON_DIR, "未知心法.png")
 }
 
-EQUIP_ICON_DIR = os.path.join(BASE_DIR, "assets", "equip")
-FIVESTONE_ICON_DIR = os.path.join(EQUIP_ICON_DIR, "assets", "fivestone")
-ENCHANT_ICON_DIR = os.path.join(EQUIP_ICON_DIR, "assets", "enchant")
+FIVESTONE_ICON_DIR = os.path.join(BASE_DIR, "assets", "equip", "fivestone")
+ENCHANT_ICON_DIR = os.path.join(BASE_DIR, "assets", "equip", "enchant")
 FIVESTONE_MAP = {
     "五行石（一级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
     "五行石（二级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
