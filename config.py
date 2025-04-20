@@ -44,13 +44,13 @@ FIVESTONE_ICON_DIR = os.path.join(BASE_DIR, "assets", "equip", "fivestone")
 ENCHANT_ICON_DIR = os.path.join(BASE_DIR, "assets", "equip", "enchant")
 FIVESTONE_MAP = {
     "五行石（一级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
-    "五行石（二级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
-    "五行石（三级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
-    "五行石（四级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
-    "五行石（五级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
-    "五行石（六级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
-    "五行石（七级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
-    "五行石（八级）": os.path.join(FIVESTONE_ICON_DIR, "1.png"),
+    "五行石（二级）": os.path.join(FIVESTONE_ICON_DIR, "2.png"),
+    "五行石（三级）": os.path.join(FIVESTONE_ICON_DIR, "3.png"),
+    "五行石（四级）": os.path.join(FIVESTONE_ICON_DIR, "4.png"),
+    "五行石（五级）": os.path.join(FIVESTONE_ICON_DIR, "5.png"),
+    "五行石（六级）": os.path.join(FIVESTONE_ICON_DIR, "6.png"),
+    "五行石（七级）": os.path.join(FIVESTONE_ICON_DIR, "7.png"),
+    "五行石（八级）": os.path.join(FIVESTONE_ICON_DIR, "8.png"),
 }
 ENCHANT_MAP = {
     "common": os.path.join(ENCHANT_ICON_DIR, "common-enchant.png"),
