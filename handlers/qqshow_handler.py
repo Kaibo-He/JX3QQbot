@@ -12,7 +12,7 @@ def handle_qqshow_query(content: str) -> str:
     result = get_role_qqshow(server=server, name=name)
     if not result:
         return {
-            "content": f"查询失败，可能是区服或角色名错误，或接口超时，请稍后重试。",
+            "content": f"查询失败，请确认区服与角色名是否正确，且该角色曾在世界频道发言。",
             "image": None
         }
     
