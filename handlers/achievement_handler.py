@@ -130,7 +130,7 @@ async def generate_achievement_dungeons_card(data: dict) -> bytes:
     
     return Path(cache_path).read_bytes()
 
-async def handle_role_attribute_card(content: str):
+async def handle_role_achievement(content: str):
     parts = content.strip().split()
     
     if len(parts) < 2:
