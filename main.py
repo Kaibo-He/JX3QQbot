@@ -34,10 +34,11 @@ class JX3BotClient(botpy.Client):
         
         handler = command_map.get(cmd)
         if handler:   
-            if inspect.iscoroutinefunction(handler):
-                reply = await handler(content)
-            elif cmd == "资历":
+            
+            if cmd == "资历":
                 reply = await handler(content, user_id=user_id)
+            elif inspect.iscoroutinefunction(handler):
+                reply = await handler(content)
             else:
                 reply = handler(content)
             
