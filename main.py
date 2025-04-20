@@ -18,17 +18,6 @@ class JX3BotClient(botpy.Client):
         _log.info(f"📩 收到私信: {message.content}")
         content = message.content.strip()
         cmd = content.strip().split()[0]
-        user_id = message.author.id
-        
-        # 优先检查是否处于会话中
-        if is_in_session(user_id):
-            reply = await handle_role_achievement(content, user_id=user_id)
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                msg_id=message.id,
-                content=reply
-            )
-            return
         
         handler = command_map.get(cmd)
         if handler:   
