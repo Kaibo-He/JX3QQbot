@@ -1,4 +1,6 @@
-from jx3api import get_team_cd_data
+# handlers/team_cd_handler.py
+from config import DEFAULT_SERVER
+from api.jx3api import get_team_cd_data
 
 def handle_team_cd_query(content: str) -> dict:
     parts = content.strip().split()
@@ -7,11 +9,8 @@ def handle_team_cd_query(content: str) -> dict:
         return {
             "content": "格式错误，如需角色副本CD请输入：\n副本/cd/CD 角色id [区服]"
         }
-        
-    server = "梦江南"
     name = parts[1]
-    if len(parts) >= 3:
-        server = parts[2]
+    server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
 
     data = get_team_cd_data(server, name)
     if not data or "data" not in data:

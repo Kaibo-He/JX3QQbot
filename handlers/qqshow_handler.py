@@ -1,5 +1,7 @@
+# handlers.qqshow_handler.py
+from config import DEFAULT_SERVER
 import requests
-from jx3api import get_role_qqshow
+from api.jx3api import get_role_qqshow
 
 def handle_qqshow_query(content: str) -> str:
     parts = content.strip().split()
@@ -7,14 +9,7 @@ def handle_qqshow_query(content: str) -> str:
     name = "王熙凤"
     server = "梦江南"
 
-    if len(parts) == 2:
-        name = parts[1]
-    elif len(parts) == 3:
-        name = parts[1]
-        server = parts[2]
-    elif len(parts) == 1:
-        pass
-    else:
+    if len(parts) > 3:
         return {
             "content": "格式错误，如需查询角色名片请输入：\n名片/qq秀/QQ秀 角色id [区服]",
             "image":None
@@ -27,6 +22,8 @@ def handle_qqshow_query(content: str) -> str:
             "content": f"查询失败，可能是区服或角色名错误，或接口超时，请稍后重试。",
             "image": None
         }
+    name = parts[1] if len(parts) >= 2 else "王熙凤"
+    server = parts[2] if len(parts) == 3 else DEFAULT_SERVER
 
     # 下载图片内容
     try:

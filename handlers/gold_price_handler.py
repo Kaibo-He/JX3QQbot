@@ -1,4 +1,4 @@
-from jx3api import get_gold_price
+from api.jx3api import get_gold_price
 
 def handle_gold_price(content: str) -> str:
     parts = content.strip().split()

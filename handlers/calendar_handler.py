@@ -1,20 +1,25 @@
-from jx3api import get_daily_calendar
+# handlers/calendar_handler.py
+from config import DEFAULT_SERVER
+from api.jx3api import get_daily_calendar
 
 def handle_calendar_query(content: str) -> str:
     parts = content.strip().split()
     server = "梦江南"
 
-    if len(parts) < 2:
-        pass
-    elif len(parts) == 2:
-        server = parts[1]
-    elif len(parts) > 2:
-        return "格式错误，如需查询活动日历请输入：\n日历/日常 [区服]"
+    if len(parts) > 2:
+        return {
+            "content": "格式错误，如需查询活动日历请输入：\n日历/日常 [区服]",
+            "file_image": None
+        }
+    server = parts[1] if len(parts) == 2 else DEFAULT_SERVER
 
     calendar = get_daily_calendar(server=server)
     if not calendar:
-        return f"【{server}】的日历查询失败，可能是接口出错或区服名不正确~"
-
+        return {
+            "content": f"{server}】的日历查询失败，可能是接口出错或区服名不正确~",
+            "file_image": None
+        }
+        
     msg = f"当前时间：{calendar['date']}（星期{calendar['week']}） | 区服：{server}\n\n"
 
     # 日常任务
@@ -51,4 +56,7 @@ def handle_calendar_query(content: str) -> str:
     if len(team) >= 3:
         msg += f"└ 团队秘境：{team[2]}\n"
 
-    return msg.strip()
+    return {
+        "content": msg.strip(),
+        "file_image": None
+    }

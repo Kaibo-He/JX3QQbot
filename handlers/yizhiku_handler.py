@@ -1,21 +1,7 @@
+# handlers/yizhiku_handler.py
 from datetime import datetime, timedelta
 
-def get_current_quarter_result(content: str):
-    parts = content.strip().split()
-    
-    if len(parts) != 1:
-        return {
-        "content": "格式错误，如需一之窟解密请输入：\n解密"
-        }
-    
-    # 东八区时间
-    now = datetime.utcnow() + timedelta(hours=8)
-    minute = (now.minute // 15) * 15
-    current_key = now.replace(minute=minute, second=0, microsecond=0).strftime("%H:%M:%S")
-    next_key = (now + timedelta(minutes=15)).replace(minute=((now.minute // 15 + 1) % 4) * 15, second=0, microsecond=0).strftime("%H:%M:%S")
-
-    # time table（你也可以分离出去）
-    time_table = {
+TIME_TABLE = {
         "00:00:00": "东-9,南-0,西-1,北-9",
         "00:15:00": "东-9,南-0,西-1,北-0",
         "00:30:00": "东-9,南-0,西-1,北-1",
@@ -114,13 +100,29 @@ def get_current_quarter_result(content: str):
         "23:45:00": "东-9,南-0,西-1,北-8"
     }
 
-    current_result = time_table.get(current_key, "无匹配结果")
-    next_result = time_table.get(next_key, "无匹配结果")
+def get_current_quarter_result(content: str):
+    parts = content.strip().split()
+    
+    if len(parts) != 1:
+        return {
+        "content": "格式错误，如需一之窟解密请输入：\n解密"
+        }
+    
+    # 东八区时间
+    now = datetime.utcnow() + timedelta(hours=8)
+    minute = (now.minute // 15) * 15
+    current_key = now.replace(minute=minute, second=0, microsecond=0).strftime("%H:%M:%S")
+    next_key = (now + timedelta(minutes=15)).replace(
+        minute=((now.minute // 15 + 1) % 4) * 15, second=0, microsecond=0
+    ).strftime("%H:%M:%S")
+    
+    current_result = TIME_TABLE.get(current_key, "无匹配结果")
+    next_result = TIME_TABLE.get(next_key, "无匹配结果")
 
     return {
         "content": (
-            f"一之窟暗器解密助手\n"
-            f"当前时间段（{current_key}）：{current_result}\n"
-            f"下一个时间段（{next_key}）：{next_result}"
+            f"一之窟暗器解密助手\n\n"
+            f"当前时间段（{current_key}）：\n{current_result}\n\n"
+            f"下一个时间段（{next_key}）：\n{next_result}"
         )
     }

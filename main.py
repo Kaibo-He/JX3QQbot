@@ -3,15 +3,11 @@ from config_loader import get_bot_config
 from botpy.message import DirectMessage
 from botpy import logging
 
-from handlers.open_server_handler import handle_open_server_query
-from handlers.calendar_handler import handle_calendar_query
-from handlers.qqshow_handler import handle_qqshow_query
-from handlers.role_attribute_handler import handle_role_attribute_card
-from handlers.team_cd_handler import handle_team_cd_query
-from handlers.yizhiku_handler import get_current_quarter_result
-from handlers.auction_handler import handle_auction_card
-from handlers.trade_handler import handle_trade_card
-from handlers.gold_price_handler import handle_gold_price
+from handlers import command_map
+from session_manager import (
+    is_in_session, start_session, get_session, refresh_session,
+    end_session, cleanup_sessions, is_valid_input
+)
 
 config = get_bot_config()
 _log = logging.get_logger()
@@ -24,111 +20,25 @@ class JX3BotClient(botpy.Client):
         _log.info(f"📩 收到私信: {message.content}")
         content = message.content.strip()
         cmd = content.strip().split()[0]
-
-        if cmd in ["开服"]:
-            reply = handle_open_server_query(content)
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                content=reply,
-                msg_id=message.id,
-            )
-
-        elif cmd in ["日历", "日常"]:
-            reply = handle_calendar_query(content)
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                content=reply,
-                msg_id=message.id,
-            )
-
-        elif cmd in ["名片", "qq秀", "QQ秀"]:
-            reply = handle_qqshow_query(content)
-            if reply.get("image"):
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"],
-                    image=reply["image"],
-                )
-            else:
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"]
-                )
-                
-        elif cmd in ["属性", "装备"]:
-            reply = await handle_role_attribute_card(content)
-            if reply["file_image"]:
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"],
-                    file_image=reply["file_image"]
-                )
-            else:
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"]
-                )
-                
-        elif cmd.lower() in ["副本", "cd"]:
-            reply = handle_team_cd_query(content)
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                msg_id=message.id,
-                content=reply["content"]
-            )
+        
+        handler = command_map.get(cmd)
+        if handler:   
+            reply = await handler(content) if callable(handler) and hasattr(handler, "__await__") else handler(content)
             
-        elif cmd in ["交易行", "拍卖行"]:
-            reply = await handle_auction_card(content)
-            if reply["file_image"]:
+            if isinstance(reply, dict):
                 await self.api.post_dms(
                     guild_id=message.guild_id,
                     msg_id=message.id,
-                    content=reply["content"],
-                    file_image=reply["file_image"]
+                    content=reply.get("content", ""),
+                    file_image=reply.get("file_image"),
+                    image=reply.get("image")
                 )
-            else:
+            elif isinstance(reply, str):
                 await self.api.post_dms(
                     guild_id=message.guild_id,
                     msg_id=message.id,
-                    content=reply["content"]
+                    content=reply
                 )
-                
-        elif cmd in ["物价", "外观"]:
-            reply = await handle_trade_card(content)
-            if reply["file_image"]:
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"],
-                    file_image=reply["file_image"]
-                )
-            else:
-                await self.api.post_dms(
-                    guild_id=message.guild_id,
-                    msg_id=message.id,
-                    content=reply["content"]
-                )
-                
-        elif cmd in ["金价", "金币", "买金"]:
-            reply = handle_gold_price(content)
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                content=reply,
-                msg_id=message.id,
-            )
-                
-        elif cmd in ["解密", "解谜"]:
-            reply = get_current_quarter_result(content)
-            await self.api.post_dms(
-                guild_id=message.guild_id,
-                msg_id=message.id,
-                content=reply["content"]
-            )   
-                
         else:
             reply = "暂不支持该指令,详情请查询功能列表。"
             await self.api.post_dms(
@@ -138,6 +48,6 @@ class JX3BotClient(botpy.Client):
             )
 
 if __name__ == "__main__":
-    intents = botpy.Intents(direct_message=True)
+    intents = botpy.Intents(direct_message=True, public_guild_messages=True)
     client = JX3BotClient(intents=intents)
     client.run(appid=config["appid"], secret=config["secret"])

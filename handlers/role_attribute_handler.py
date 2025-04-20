@@ -1,10 +1,13 @@
+# handlers/role_attribute_handler.py
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 import os
 import hashlib
 import time
-from jx3api import get_role_attribute
-from handlers.html_to_image import render_html_to_image
+
+from config import DEFAULT_SERVER
+from api.jx3api import get_role_attribute
+from utils.html_to_image import render_html_to_image
 
 TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/equip_card.png"
@@ -37,12 +40,9 @@ async def generate_role_equip_card(data: dict) -> bytes:
     }
 
     html = template.render(context)
-    
-    # 生成并保存
     await render_html_to_image(html, cache_path)
-    img = Path(cache_path).read_bytes()
-    os.remove(cache_path)
-    return img
+    
+    return Path(cache_path).read_bytes()
 
 async def handle_role_attribute_card(content: str):
     parts = content.strip().split()
@@ -52,10 +52,10 @@ async def handle_role_attribute_card(content: str):
             "content": "格式错误，如需查询角色装备请输入：\n装备/属性 角色id [区服]"
         }
         
-    server = "梦江南"
-    name = parts[1]
     if len(parts) >= 3:
         server = parts[2]
+    name = parts[1]
+    server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
 
     data = get_role_attribute(server=server, name=name)
     if not data:

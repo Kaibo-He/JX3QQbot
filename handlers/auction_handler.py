@@ -1,11 +1,14 @@
+# handelers/auction_handeler.py
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 import os
 import hashlib
 import time
 import datetime
-from handlers.html_to_image import render_html_to_image
-from jx3boxapi import get_item_info, get_item_auction
+
+from config import DEFAULT_SERVER
+from utils.html_to_image import render_html_to_image
+from api.jx3boxapi import get_item_info, get_item_auction
 
 TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/auction_card.png"
@@ -67,12 +70,9 @@ async def generate_auction_card(server: str, keyword: str) -> bytes:
         }
 
     html = template.render(context)
-    
-    # 生成并保存
     await render_html_to_image(html, cache_path)
-    img = Path(cache_path).read_bytes()
-    os.remove(cache_path)
-    return img
+    
+    return Path(cache_path).read_bytes()
 
 async def handle_auction_card(content: str):
     parts = content.strip().split()
@@ -83,12 +83,10 @@ async def handle_auction_card(content: str):
             "file_image": None
         }
         
-    server = "梦江南"
-    keyword = parts[1]
     if len(parts) >= 3:
         server = parts[2]
-    
-    print(f"📦 搜索关键词: {keyword}")
+    keyword = parts[1]
+    server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
 
     image = await generate_auction_card(server, keyword)
     return {
