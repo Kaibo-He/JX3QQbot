@@ -13,7 +13,7 @@ TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/equip_card.png"
 CACHE_DIR = "/tmp/equip_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
-CACHE_DURATION = 60  # 缓存60秒
+CACHE_DURATION = 180
 
 # 接收角色数据，生成图片
 async def generate_role_equip_card(data: dict) -> bytes:
@@ -65,7 +65,7 @@ async def handle_role_attribute_card(content: str):
     name = parts[1]
     server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
 
-    data = get_role_attribute(server=server, name=name)
+    data = await get_role_attribute(server=server, name=name)
     if not data:
         return { "content": "查询失败，可能是区服或角色名错误，或接口超时，请稍后重试。", "file_image": None }
 

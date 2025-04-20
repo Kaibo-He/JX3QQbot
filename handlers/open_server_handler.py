@@ -2,7 +2,7 @@
 from config import DEFAULT_SERVER
 from api.jx3api import get_server_status
 
-def handle_open_server_query(content: str) -> str:
+async def handle_open_server_query(content: str) -> str:
     parts = content.strip().split()
 
     if len(parts) > 2:
@@ -12,7 +12,7 @@ def handle_open_server_query(content: str) -> str:
         }
     server = parts[1] if len(parts) == 2 else DEFAULT_SERVER
         
-    status = get_server_status(server)
+    status = await get_server_status(server)
     if not status:
         return {
             "content": f"无法获取【{server}】的开服状态，接口可能出错或区服名称不正确。",

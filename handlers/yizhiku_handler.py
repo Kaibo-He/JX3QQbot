@@ -100,7 +100,7 @@ TIME_TABLE = {
         "23:45:00": "东-9,南-0,西-1,北-8"
     }
 
-def get_current_quarter_result(content: str):
+async def get_current_quarter_result(content: str):
     parts = content.strip().split()
     
     if len(parts) != 1:

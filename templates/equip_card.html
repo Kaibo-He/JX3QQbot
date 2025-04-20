@@ -153,7 +153,7 @@
       <p>{{ force_name }} · {{ kungfu_name }}</p>
       <p>{{ zone_name }} @ {{ server_name }}</p>
     </div>
-    <img class="kungfu-icon" src="{{ kungfu_icon }}">
+    <img class="kungfu-icon" src="{{ kungfu_icon }}" onerror="this.style.display='none'">
   </div>
 
   <div class="panel">
@@ -169,7 +169,7 @@
   <div class="equip-list">
     {% for equip in equipList %}
     <div class="equip">
-      <img class="icon" src="{{ equip.icon }}">
+      <img class="icon" src="{{ equip.icon }}" onerror="this.style.display='none'">
       <div class="details">
         <div class="details-left">
           <div class="name">{{ equip.name }} · {{ equip.quality }} {% if equip.strengthLevel %} + {{ equip.strengthLevel }}{% endif %}</div>
@@ -180,6 +180,7 @@
           </div>
           <div class="colorStone">
             {% if equip.colorStone %}
+            <img src="{{ equip.colorStone.icon }}" onerror="this.style.display='none'">
             {{ equip.colorStone.name }}
             {% endif %}
           </div>
@@ -187,17 +188,19 @@
         <div class="details-right">
           <div class="enchant">
             {% for ench in equip.permanentEnchant %}
-            {{ ench.name }} 
+            {{ ench.name }}
+            <img src="{{ equip.permanentEnchant.icon }}" onerror="this.style.display='none'">
             {% endfor %}
           </div>
           <div class="common">
             {% if equip.commonEnchant %}
-            <img src="{{ equip.commonEnchant.icon }}">
+            {{ equip.commonEnchant.name }}
+            <img src="{{ equip.commonEnchant.icon }}" onerror="this.style.display='none'">
             {% endif %}
           </div>
           <div class="stones">
             {% for stone in equip.fiveStone %}
-            <img src="{{ stone.icon }}">
+            <img src="{{ stone.icon }}" onerror="this.style.display='none'">
             {% endfor %}
           </div>
         </div>

@@ -14,7 +14,7 @@ TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/auction_card.png"
 CACHE_DIR = "/tmp/auction_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
-CACHE_DURATION = 60  # 缓存60秒
+CACHE_DURATION = 180  # 缓存60秒
 
 # 根据物品数据，生成图片
 async def generate_auction_card(server: str, keyword: str) -> bytes:
@@ -29,7 +29,7 @@ async def generate_auction_card(server: str, keyword: str) -> bytes:
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("auction_card.html")
 
-    item_list = get_item_info(keyword)
+    item_list = await get_item_info(keyword)
     
     if not item_list:
         print("❌ 未获取到物品列表，请检查关键词或 API 是否正常返回。")
@@ -38,7 +38,7 @@ async def generate_auction_card(server: str, keyword: str) -> bytes:
     filtered_item_list = []
     # 获取物品icon,名称染色,交易行信息
     for item in item_list:
-        auction_list = get_item_auction(server, item["id"])
+        auction_list = await get_item_auction(server, item["id"])
         
         if not auction_list:
             continue

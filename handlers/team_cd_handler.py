@@ -2,7 +2,7 @@
 from config import DEFAULT_SERVER
 from api.jx3api import get_team_cd_data
 
-def handle_team_cd_query(content: str) -> dict:
+async def handle_team_cd_query(content: str) -> dict:
     parts = content.strip().split()
     
     if len(parts) < 2:
@@ -12,7 +12,7 @@ def handle_team_cd_query(content: str) -> dict:
     name = parts[1]
     server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
 
-    data = get_team_cd_data(server, name)
+    data = await get_team_cd_data(server, name)
     if not data or "data" not in data:
         return {"content": "查询失败，可能是区服或角色名错误，或接口超时，请稍后重试。"}
 

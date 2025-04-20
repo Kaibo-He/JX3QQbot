@@ -2,7 +2,7 @@
 from config import DEFAULT_SERVER
 from api.jx3api import get_daily_calendar
 
-def handle_calendar_query(content: str) -> str:
+async def handle_calendar_query(content: str) -> str:
     parts = content.strip().split()
     server = "梦江南"
 
@@ -13,7 +13,7 @@ def handle_calendar_query(content: str) -> str:
         }
     server = parts[1] if len(parts) == 2 else DEFAULT_SERVER
 
-    calendar = get_daily_calendar(server=server)
+    calendar = await get_daily_calendar(server=server)
     if not calendar:
         return {
             "content": f"{server}】的日历查询失败，可能是接口出错或区服名不正确~",

@@ -133,8 +133,8 @@
         {% for level, data in stats.items() %}
         <div class="type-score">
           <div class="level-name">{{level}}</div>
-          <div class="seniority">♜{{ data.seniority.speed }}/{{ data.seniority.total }}</div>
-          <div class="pieces">★{{ data.pieces.speed }}/{{ data.pieces.total }}</div>
+          <div class="seniority">♜{{ data.seniority.speed }} / {{ data.seniority.total }}</div>
+          <div class="pieces">★{{ data.pieces.speed }} / {{ data.pieces.total }}</div>
           {% set percent = (data.pieces.speed / data.pieces.total * 100) | round(2) %}
           <div class="type-percent">{{ percent }}%</div>
         </div>

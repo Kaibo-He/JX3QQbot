@@ -5,7 +5,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 # 开服状态
-def get_server_status(server: str = "梦江南"):
+async def get_server_status(server: str = "梦江南"):
     url = "https://www.jx3api.com/data/server/check"
     payload = {"server": server}
 
@@ -34,7 +34,7 @@ def get_server_status(server: str = "梦江南"):
         return None
 
 # 活动日历
-def get_daily_calendar(server: str = "梦江南", num: int = 0):
+async def get_daily_calendar(server: str = "梦江南", num: int = 0):
     url = "https://www.jx3api.com/data/active/calendar"
     payload = {"server": server, "num": num}
 
@@ -68,7 +68,7 @@ def get_daily_calendar(server: str = "梦江南", num: int = 0):
         return None
 
 # 角色名片
-def get_role_qqshow(server: str, name: str):
+async def get_role_qqshow(server: str, name: str):
     url = "https://www.jx3api.com/data/show/card"
     auth = get_jx3api_auth()
 
@@ -94,7 +94,7 @@ def get_role_qqshow(server: str, name: str):
         return None
     
 # 角色装备
-def get_role_attribute(server: str, name: str):
+async def get_role_attribute(server: str, name: str):
     url = "https://www.jx3api.com/data/role/attribute"
     auth = get_jx3api_auth()
     
@@ -125,7 +125,7 @@ def get_role_attribute(server: str, name: str):
         return None
     
 # 副本CD
-def get_team_cd_data(server: str, name: str):
+async def get_team_cd_data(server: str, name: str):
     url = "https://www.jx3api.com/data/role/teamCdList"
     auth = get_jx3api_auth()
 
@@ -149,7 +149,7 @@ def get_team_cd_data(server: str, name: str):
         return None
     
 # 黑市物价
-def get_trade_data(server: str, name: str):
+async def get_trade_data(server: str, name: str):
     url = "https://www.jx3api.com/data/trade/records"
     auth = get_jx3api_auth()
     
@@ -179,7 +179,7 @@ def get_trade_data(server: str, name: str):
         return None
     
 # 金币价格
-def get_gold_price(server: str):
+async def get_gold_price(server: str):
     url = "https://www.jx3api.com/data/trade/demon"
     auth = get_jx3api_auth()
     
@@ -209,7 +209,7 @@ def get_gold_price(server: str):
         return None
     
 # 资历分布
-def get_role_achievement(server: str, name: str):
+async def get_role_achievement(server: str, name: str):
     url = "https://www.jx3api.com/data/tuilan/achievement"
     auth = get_jx3api_auth()
     

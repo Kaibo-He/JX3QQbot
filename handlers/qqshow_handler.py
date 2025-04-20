@@ -3,13 +3,13 @@ from config import DEFAULT_SERVER
 import requests
 from api.jx3api import get_role_qqshow
 
-def handle_qqshow_query(content: str) -> str:
+async def handle_qqshow_query(content: str) -> str:
     parts = content.strip().split()
 
     name = parts[1] if len(parts) >= 2 else "王熙凤"
     server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
 
-    result = get_role_qqshow(server=server, name=name)
+    result = await get_role_qqshow(server=server, name=name)
     if not result:
         return {
             "content": f"查询失败，请确认区服与角色名是否正确，且该角色曾在世界频道发言。",

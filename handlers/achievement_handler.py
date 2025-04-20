@@ -15,7 +15,7 @@ OUTPUT_PATH_2 = "/tmp/achievement_map.png"
 OUTPUT_PATH_1 = "/tmp/achievement_dungeon.png"
 CACHE_DIR = "/tmp/achievement_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
-CACHE_DURATION = 60  # 缓存60秒
+CACHE_DURATION = 180
 
 async def generate_achievement_total_card(data: dict) -> bytes:
     # 缓存 key
@@ -143,7 +143,7 @@ async def handle_role_achievement(content: str):
     name = parts[1]
     server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
 
-    data = get_role_achievement(server=server, name=name)
+    data = await get_role_achievement(server=server, name=name)
     if not data:
         return { "content": "查询失败，可能是区服或角色名错误，或接口超时，请稍后重试。", "file_image": None }
 

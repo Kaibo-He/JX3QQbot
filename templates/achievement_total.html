@@ -65,7 +65,7 @@
     }
 
     .main-progress-info {
-      font-size: 20px;
+      font-size: 24px;
     }
 
     .type-list {
@@ -148,7 +148,7 @@
     <div class="main-progress-container">
       <div class="main-progress-bar" style="width: {{ total_percent }}%"></div>
     </div>
-    <div class="main-progress-info">{{ total_speed }} / {{ total_total }} · {{ total_percent }}%</div>
+    <div class="main-progress-info">总资历 · {{ total_speed }} / {{ total_total }} · {{ total_percent }}%</div>
   </div>
 
   <div class="type-list">
@@ -157,8 +157,8 @@
       <div class="type-name">{{ type }}</div>
       <div class="type-info">
         <div class="type-score">
-          <div class="seniority">♜{{ stats.seniority_speed }}/{{ stats.seniority_total }}</div>
-          <div class="pieces">★{{ stats.pieces_speed }}/{{ stats.pieces_total }}</div>
+          <div class="seniority">♜{{ stats.seniority_speed }} / {{ stats.seniority_total }}</div>
+          <div class="pieces">★{{ stats.pieces_speed }} / {{ stats.pieces_total }}</div>
           <div class="type-percent">{{ stats.percent }}%</div>
         </div>
         <div class="progress-container">

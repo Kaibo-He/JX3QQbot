@@ -3,7 +3,7 @@ import random
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-def create_retry_session(retries=3, backoff_factor=1.0):
+async def create_retry_session(retries=3, backoff_factor=1.0):
     session = requests.Session()
     retry = Retry(
         total=retries,
@@ -18,7 +18,7 @@ def create_retry_session(retries=3, backoff_factor=1.0):
     return session
 
 # 根据关键词获取物品列表
-def get_item_info(item_name: str):
+async def get_item_info(item_name: str):
     session = create_retry_session()
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
@@ -63,7 +63,7 @@ def get_item_info(item_name: str):
     return []
 
 # 根据物品id获得近30日内区服交易行价格
-def get_item_auction(server: str, item_id: str):
+async def get_item_auction(server: str, item_id: str):
     url = "https://next2.jx3box.com/api/auction/"
     payload = {
         "server": server,
