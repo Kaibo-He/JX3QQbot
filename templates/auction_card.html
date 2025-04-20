@@ -116,7 +116,7 @@
       {% for item in item_list %}
       <tr>
         <td class="icon">
-          <img class="item-icon" src="{{ item.icon }}">
+          <img class="item-icon" src="{{ item.icon }}" onerror="this.style.display='none'">
         </td>
         <td class="info {{ item.color }}">{{ item.name }}</td>
         <td class="info">{{ item.high|safe }}</td>
