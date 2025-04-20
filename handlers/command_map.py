@@ -8,6 +8,7 @@ from handlers.yizhiku_handler import get_current_quarter_result
 from handlers.auction_handler import handle_auction_card
 from handlers.trade_handler import handle_trade_card
 from handlers.gold_price_handler import handle_gold_price
+from handlers.achievement_handler import handle_role_achievement
 
 command_map = {
     "开服": handle_open_server_query,
@@ -28,5 +29,6 @@ command_map = {
     "金币": handle_gold_price,
     "买金": handle_gold_price,
     "解密": get_current_quarter_result,
-    "解谜": get_current_quarter_result
+    "解谜": get_current_quarter_result,
+    "资历": handle_role_achievement
 }
