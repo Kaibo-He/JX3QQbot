@@ -17,9 +17,9 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 CACHE_DURATION = 180
 
 # 接收角色数据，生成图片
-async def generate_luck_card(data: dict, server: str, keyword: str) -> bytes:
+async def generate_team_card(data: dict, keyword: str) -> bytes:
     # 缓存 key
-    cache_key = hashlib.md5((keyword + server).encode()).hexdigest()
+    cache_key = hashlib.md5((keyword + data["server"]).encode()).hexdigest()
     cache_path = os.path.join(CACHE_DIR, f"{cache_key}.png")
     # 缓存命中且未过期
     if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path) < CACHE_DURATION):
@@ -36,8 +36,8 @@ async def generate_luck_card(data: dict, server: str, keyword: str) -> bytes:
     for item in data["data"]:
         item["time"] = format_time(item["createTime"])
     context = {
-        "item_list": data["data"],
-        "server_name": server
+        "item_list": data["data"][:25],
+        "server_name": data["server"]
     }
 
     html = template.render(context)
@@ -55,12 +55,11 @@ async def handle_team_search(content: str):
     keyword = parts[1]
     server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
     
-    records = await get_team_records(server=server, keyword=keyword)
-    if not records:
+    data = await get_team_records(server=server, keyword=keyword)
+    if not data:
         return { "content": "查询失败，可能是区服名错误，或接口超时，请稍后重试。", "file_image": None }
 
-    data = records[:25]
-    image = await generate_luck_card(data, server, keyword)
+    image = await generate_team_card(data, server, keyword)
     return {
         "content": "搜索团队招募：",
         "file_image": image
