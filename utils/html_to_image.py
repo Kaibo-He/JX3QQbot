@@ -48,7 +48,8 @@ async def render_html_to_adapted_image(
     output_path: str,
     min_height: int = 1800,
     to_base64: bool = False,
-    quality: int = 80
+    quality: int = 80,
+    max_size_kb: int = 2048  # 限制最大文件大小（单位 KB）
 ):
     await init_browser()
     global _context
@@ -62,19 +63,31 @@ async def render_html_to_adapted_image(
         file_url = f"file://{html_path}"
         await page.goto(file_url, wait_until="networkidle")
 
-        # 获取实际高度并设置 viewport
         content_height = await page.evaluate("document.documentElement.scrollHeight")
         final_height = max(min_height, content_height)
         await page.set_viewport_size({"width": 960, "height": final_height})
 
-        # 截图保存为 JPEG
-        await page.screenshot(path=output_path, type="jpeg", quality=quality, full_page=False)
+        # 先截图为 PNG（无损）
+        temp_png_path = os.path.join(tmpdir, "initial.png")
+        await page.screenshot(path=temp_png_path, full_page=False)
         await page.close()
 
-    # 输出 base64 字符串
+        file_size_kb = os.path.getsize(temp_png_path) // 1024
+
+        # 判断是否压缩
+        if file_size_kb > max_size_kb:
+            # 压缩为 JPEG
+            from PIL import Image
+            im = Image.open(temp_png_path).convert("RGB")
+            im.save(output_path, format="JPEG", quality=quality)
+        else:
+            # 直接复制为最终图像
+            with open(temp_png_path, "rb") as src, open(output_path, "wb") as dst:
+                dst.write(src.read())
+
     if to_base64:
         with open(output_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode()
         return f"data:image/jpeg;base64,{encoded}"
-    
+
     return output_path
