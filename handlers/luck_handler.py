@@ -68,7 +68,7 @@ async def generate_luck_card(data: dict) -> bytes:
         "server_name": f"{data[0]['server']}@{data[0]['zone']}",
         "total_speed": len(data),
         "total_total": total_luck,
-        "total_percent": round(total_luck / len(data) * 100, 2),
+        "total_percent": round(len(data) / total_luck * 100, 2),
         "stats": result,
         "recent": recent
     }
