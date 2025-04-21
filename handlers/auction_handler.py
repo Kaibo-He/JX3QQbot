@@ -14,7 +14,7 @@ TEMPLATE_DIR = "templates"
 OUTPUT_PATH = "/tmp/auction_card.png"
 CACHE_DIR = "/tmp/auction_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
-CACHE_DURATION = 180  # 缓存60秒
+CACHE_DURATION = 180
 
 # 根据物品数据，生成图片
 async def generate_auction_card(server: str, keyword: str) -> bytes:

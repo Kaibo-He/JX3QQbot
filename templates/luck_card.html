@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>资历总览</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #437363, #A8A8A8);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      padding: 0 30px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      color: white;
+      flex-direction: column;
+    }
+
+    .header .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .header .title h1 {
+      font-size: 32px;
+      text-shadow: 0 0 10px #022F0B;
+    }
+
+    .header .title p {
+      font-size: 24px;
+      text-shadow: 0 0 10px #022F0B;
+    }
+
+    .main-progress-container {
+      width: 95%;
+      background-color: #1F3432;
+      border: 1px solid #8AEFC8;
+      border-radius: 100px;
+      overflow: hidden;
+      height: 30px;
+      margin: 6px 0;
+      text-align: center;
+    }
+
+    .main-progress-bar {
+      height: 20px;
+      background-color: #36A830;
+      border-radius: 100px;
+      width: 0%;
+      margin: 5px;
+      box-sizing: border-box;
+    }
+
+    .main-progress-info {
+      font-size: 24px;
+    }
+
+    .layout-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .type-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .type-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    .type-title {
+      font-size: 32px;
+      text-shadow: 0 0 5px #FFFD77;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 3px;
+      border-radius: 100px;
+      width: 0%;
+      margin: 1px;
+      box-sizing: border-box;
+    }
+
+    .progress-container {
+      width: 90%;
+      background-color: #425B41;
+      border-radius: 100px;
+      overflow: hidden;
+      height: 5px;
+      margin: 6px 0;
+      text-align: center;
+    }
+
+    .progress-info {
+      color: white;
+    }
+
+    .type-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 10px 10px;
+      width: 880px;
+      margin: 0 auto;
+    }
+
+    .luck-item {
+      width: calc(20% - 10px);
+      background-color: rgba(11, 51, 36, 0.71);
+      color: #A7D4AD;
+      font-size: 20px;
+      text-align: center;
+      border-radius: 15px;
+      padding: 10px 0;
+    }
+
+    .recent-container {
+      background-color: rgba(11, 51, 36, 0.49);
+      width: 100%;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .recent-title {
+      font-size: 26px;
+      text-shadow: 0 0 5px #FFFD77;
+      color: white;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .recent-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .recent-item {
+      display: flex;
+      justify-content: space-between;
+      width: 85%;
+      color: white;
+      font-size: 24px;
+      padding: 20px 20px;
+      background-color: rgba(11, 51, 36, 0.71);
+      border-radius: 15px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <h1>{{ role_name }} | 奇遇记录</h1>
+      <p>{{ server_name }}</p>
+    </div>
+    <div class="main-progress-container">
+      <div class="main-progress-bar" style="width: {{ total_percent }}%"></div>
+    </div>
+    <div class="main-progress-info">总进度 · {{ total_speed }} / {{ total_total }}</div>
+  </div>
+
+  <div class="layout-container">
+    <div class="type-container">
+      <div class="type-header">
+        <div class="type-title">
+          <span>-</span>
+          <span>绝世</span>
+          <span>-</span>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar" 
+          style="width: {{ stats.绝世.percent }}%; background-color: #FFEE02"></div>
+        </div>
+        <div class="progress-info">★ {{ stats["绝世"].progress }} / {{ stats["绝世"].total }}</div>
+      </div>
+      <div class="type-list">
+        {% for item in stats["绝世"].list %}
+        <div 
+          class="luck-item"
+          {% if item.triggered %}
+          style="background-color: rgba(255, 238, 2, 0.62); color: #ffffff; font-weight: bold; text-shadow: 0 0 5px #322314;"
+          {% endif %}
+          >
+          <div class="item-name">{{ item.name }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="type-container">
+      <div class="type-header">
+        <div class="type-title">
+          <span>-</span>
+          <span>普通</span>
+          <span>-</span></div>
+        <div class="progress-container">
+          <div class="progress-bar" 
+          style="width: {{ stats.普通.percent }}%; background-color: #0EACE6"></div>
+        </div>
+        <div class="progress-info">★ {{ stats["普通"].progress }} / {{ stats["普通"].total }}</div>
+      </div>
+      <div class="type-list">
+        {% for item in stats["普通"].list %}
+        <div 
+          class="luck-item"
+          {% if item.triggered %}
+          style="background-color: rgba(14, 172, 230, 0.61); color: #ffffff; font-weight: bold; text-shadow: 0 0 5px #212542;"
+          {% endif %}
+        >
+          <div class="item-name">{{ item.name }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="type-container">
+      <div class="type-header">
+        <div class="type-title">
+          <span>-</span>
+          <span>宠物</span>
+          <span>-</span>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar" 
+          style="width: {{ stats.宠物.percent }}%; background-color: #1ADC68" ></div>
+        </div>
+        <div class="progress-info">★ {{ stats["宠物"].progress }} / {{ stats["宠物"].total }}</div>
+      </div>
+      <div class="type-list">
+        {% for item in stats["宠物"].list %}
+        <div 
+          class="luck-item"
+          {% if item.triggered %}
+          style="background-color: rgba(26, 220, 104, 0.61); color: #ffffff; font-weight: bold; text-shadow: 0 0 5px #1D5E20;"
+          {% endif %}
+        >
+          <div class="item-name">{{ item.name }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="recent-container">
+      <div class="recent-title">最近触发</div>
+      <div class="recent-list">
+        {% for item in recent %}
+        <div class="recent-item">
+          <div class="rencent-type">
+            {% if item.level == 1 %}
+            <span style="color: #0EACE6">普通</span>
+            {% elif item.level == 2 %}
+            <span style="color: #FFEE02">绝世</span>
+            {% elif item.level == 3 %}
+            <span style="color: #1ADC68">宠物</span>
+            {% endif %}
+          </div>
+          <div class="recent-name">{{ item.event }}</div>
+          <div class="recent-time">{{ item.time }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
