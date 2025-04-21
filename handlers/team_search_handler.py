@@ -33,10 +33,10 @@ async def generate_luck_card(data: dict, server: str, keyword: str) -> bytes:
         if ts == 0:
             return "-"
         return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
-    for item in data:
+    for item in data["data"]:
         item["time"] = format_time(item["createTime"])
     context = {
-        "item_list": data,
+        "item_list": data["data"],
         "server_name": server
     }
 
