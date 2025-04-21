@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>团队招募</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #437363, #A8A8A8);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .header .title h1 {
+      margin: 0;
+      font-size: 32px;
+      text-shadow: 0 0 10px #022F0B;
+    }
+
+    .records {
+      margin-bottom: 50px;
+      background-color: rgba(217, 222, 216, 0.3);
+      border-radius: 20px;
+      justify-content: center;
+      height: 90%;
+      padding: 20px;
+    }
+
+    .records table{
+      width: 95%;
+      border-collapse: collapse;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .records th {
+      font-size: 24px;
+      justify-content: center;
+    }
+
+    .records tr.divider td {
+      padding: 10px;
+      height: 1px;
+    }
+    
+    .records tr.divider td::before {
+      content: "";
+      display: block;
+      width: 95%;
+      margin: 0 auto;
+      height: 1px;
+      background-color: white;
+    }
+
+    .records tr:first-child th {
+      padding-bottom: 30px;
+    }
+
+    .records td, .records th {
+      padding: 12px 10px;
+    }
+
+    .info {
+      font-size: 20px;
+      justify-content: center;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <h1>团队招募 | {{ server_name }}</h1>
+    </div>
+  </div>
+
+  <div class="records">
+    <table>
+      <tr>
+        <th>活动</th>
+        <th>等级</th>
+        <th>团长</th>
+        <th>信息</th>
+        <th>人数</th>
+        <th>时间</th>
+      </tr>
+      {% for item in item_list %}
+      <tr>
+        <td class="info">{{ item.activity }}</td>
+        <td class="info">{{ item.level }}</td>
+        <td class="info">{{ item.leader }}</td>
+        <td class="info">{{ item.content }}</td>
+        <td class="info">{{ item.number }} / {{ item.maxNumber }}</td>
+        <td class="info">{{ item.time }}</td>
+      </tr>
+      <tr class="divider">
+        <td colspan="6"></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  
+</body>
+</html>

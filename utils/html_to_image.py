@@ -47,6 +47,7 @@ async def render_html_to_adapted_image(
     html: str,
     output_path: str,
     min_height: int = 1800,
+    width: int = 960,
     to_base64: bool = False,
     quality: int = 80,
     max_size_kb: int = 2048  # 限制最大文件大小（单位 KB）
@@ -65,7 +66,7 @@ async def render_html_to_adapted_image(
 
         content_height = await page.evaluate("document.documentElement.scrollHeight")
         final_height = max(min_height, content_height)
-        await page.set_viewport_size({"width": 960, "height": final_height})
+        await page.set_viewport_size({"width": width, "height": final_height})
 
         # 先截图为 PNG（无损）
         temp_png_path = os.path.join(tmpdir, "initial.png")

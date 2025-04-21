@@ -270,3 +270,33 @@ async def get_luck_records(server: str, name: str):
     except Exception as e:
         print("Error fetching role attribute:", e)
         return None
+    
+# 团队招募
+async def get_team_records(server: str, keyword: str):
+    url = "https://www.jx3api.com/data/member/recruit"
+    auth = get_jx3api_auth()
+    
+    payload = {
+        "server": server,
+        "keyword": keyword,
+        "token": auth["token"]
+    }
+    
+    try:
+        session = requests.Session()
+        retry_strategy = Retry(total=2, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        session.mount("https://", adapter)
+
+        res = session.post(url, json=payload, timeout=20)
+        if res.status_code != 200:
+            return None
+
+        result = res.json()
+        if result.get("code") != 200 or "data" not in result:
+            return None
+
+        return result["data"]
+    except Exception as e:
+        print("Error fetching role attribute:", e)
+        return None

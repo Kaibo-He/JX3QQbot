@@ -10,6 +10,7 @@ from handlers.trade_handler import handle_trade_card
 from handlers.gold_price_handler import handle_gold_price
 from handlers.achievement_handler import handle_role_achievement
 from handlers.luck_handler import handle_luck_card
+from handlers.team_search_handler import handle_team_search
 
 command_map = {
     "开服": handle_open_server_query,
@@ -33,5 +34,8 @@ command_map = {
     "解谜": get_current_quarter_result,
     "资历": handle_role_achievement,
     "资历分布": handle_role_achievement,
-    "奇遇": handle_luck_card
+    "奇遇": handle_luck_card,
+    "奇遇记录": handle_luck_card,
+    "招募": handle_team_search,
+    "团队招募": handle_team_search,
 }

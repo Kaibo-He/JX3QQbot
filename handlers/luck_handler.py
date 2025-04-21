@@ -83,7 +83,7 @@ async def handle_luck_card(content: str):
     
     if len(parts) < 2:
         return {
-            "content": "格式错误，如需查询奇遇记录请输入：\n奇遇 角色id [区服]"
+            "content": "格式错误，如需查询奇遇记录请输入：\n奇遇/奇遇记录 角色id [区服]"
         }
     name = parts[1]
     server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
