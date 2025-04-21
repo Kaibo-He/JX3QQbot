@@ -4,4 +4,4 @@ PyYAML
 python-dotenv
 jinja2>=3.1.2
 playwright>=1.42.0
-playwright install
+Pillow>=9.0
