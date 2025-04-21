@@ -55,7 +55,7 @@ async def handle_team_search(content: str):
     keyword = parts[1]
     server = parts[2] if len(parts) >= 3 else DEFAULT_SERVER
     
-    data = await get_team_records(server=server, keyword=keyword)
+    data = await get_team_records(server=server, keyword=keyword)[:25]
     if not data:
         return { "content": "查询失败，可能是区服名错误，或接口超时，请稍后重试。", "file_image": None }
 
