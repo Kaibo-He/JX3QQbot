@@ -36,6 +36,6 @@ command_map = {
     "资历分布": handle_role_achievement,
     "奇遇": handle_luck_card,
     "奇遇记录": handle_luck_card,
-    "招募": handle_team_search,
-    "团队招募": handle_team_search,
+    # "招募": handle_team_search,
+    # "团队招募": handle_team_search,
 }
