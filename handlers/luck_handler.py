@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 import hashlib
 import time
-import datetime
+from datetime import datetime
 
 from config import DEFAULT_SERVER, LUCK_DICT
 from api.jx3api import get_luck_records
