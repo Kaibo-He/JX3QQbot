@@ -63,25 +63,31 @@ async def render_html_to_adapted_image(
         try:
             file_url = f"file://{html_path}"
             await page.goto(file_url, wait_until="load", timeout=60000)
+            await page.wait_for_load_state("networkidle")
 
             content_height = await page.evaluate("document.documentElement.scrollHeight")
             final_height = max(min_height, content_height)
             await page.set_viewport_size({"width": width, "height": final_height})
 
-            # PNG 截图中间文件
             temp_png_path = os.path.join(tmpdir, "initial.png")
 
-            # 等待字体渲染完毕
-            await page.wait_for_timeout(500)  # 可微调
-            await page.screenshot(path=temp_png_path, full_page=False)
+            if page.is_closed():
+                raise RuntimeError("页面已关闭，无法截图")
+
+            try:
+                await page.screenshot(path=temp_png_path, full_page=False)
+            except Exception as e:
+                print("[截图失败] 第一次尝试失败，尝试等待后重试", e)
+                await page.wait_for_timeout(1000)
+                await page.screenshot(path=temp_png_path, full_page=False)
 
         except Exception as e:
             print("[截图失败]", e)
             raise
         finally:
-            await page.close()
+            if not page.is_closed():
+                await page.close()
 
-        # PNG 文件大小
         file_size_kb = os.path.getsize(temp_png_path) // 1024
 
         if file_size_kb > max_size_kb:
