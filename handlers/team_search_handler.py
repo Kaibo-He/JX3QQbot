@@ -57,7 +57,7 @@ async def handle_team_search(content: str):
     
     data = await get_team_records(server=server, keyword=keyword)
     if not data:
-        return { "content": "查询失败，可能是区服名错误，或接口超时，请稍后重试。", "file_image": None }
+        return { "content": "查询失败，可能是区服名错误，或招募不存在，请稍后重试。", "file_image": None }
 
     image = await generate_team_card(data, keyword)
     return {
