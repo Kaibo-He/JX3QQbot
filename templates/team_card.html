@@ -6,11 +6,11 @@
   <style>
     body {
       font-family: sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
       background: linear-gradient(to bottom, #437363, #A8A8A8);
       background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-attachment: fixed;
       padding: 30px;
       box-sizing: border-box;
     }
@@ -31,26 +31,37 @@
     }
 
     .records {
-      margin-bottom: 50px;
       background-color: rgba(217, 222, 216, 0.3);
       border-radius: 20px;
       justify-content: center;
-      height: 90%;
       padding: 20px;
+      margin-bottom: 50px;
     }
 
     .records table{
       width: 95%;
       border-collapse: collapse;
       justify-content: center;
-      align-items: center;
       margin: 0 auto;
+      table-layout: auto;
     }
 
     .records th {
-      font-size: 24px;
+      font-size: 30px;
       justify-content: center;
     }
+
+    .records td, .records th {
+      padding: 12px 10px;
+      white-space: nowrap;
+    }
+
+    .records td:nth-child(4),
+    .records th:nth-child(4) {
+      white-space: normal;
+      width: 100%;
+    }
+
 
     .records tr.divider td {
       padding: 10px;
@@ -70,14 +81,14 @@
       padding-bottom: 30px;
     }
 
-    .records td, .records th {
-      padding: 12px 10px;
-    }
-
     .info {
-      font-size: 22px;
+      font-size: 28px;
       justify-content: center;
       text-align: center;
+    }
+
+    .activity {
+      font-weight: bold;
     }
 
   </style>
@@ -101,7 +112,7 @@
       </tr>
       {% for item in item_list %}
       <tr>
-        <td class="info">{{ item.activity }}</td>
+        <td class="info activity">{{ item.activity }}</td>
         <td class="info">{{ item.level }}</td>
         <td class="info">{{ item.leader }}</td>
         <td class="info">{{ item.content }}</td>
@@ -114,5 +125,8 @@
       {% endfor %}
     </table>
   </div>
+  <script>
+    window.ready = true;
+  </script>
 </body>
 </html>

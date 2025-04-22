@@ -7,13 +7,13 @@ import base64
 _browser = None
 _context = None
 
-async def init_browser():
+async def init_browser(width=960, height=1800):
     """全局初始化浏览器"""
     global _browser, _context
     if _browser is None:
         p = await async_playwright().start()
         _browser = await p.chromium.launch(args=["--no-sandbox"])
-        _context = await _browser.new_context(viewport={"width": 960, "height": 1800})
+        _context = await _browser.new_context(viewport={"width": width, "height": height})
 
 async def shutdown_browser():
     """关闭浏览器"""
@@ -53,6 +53,7 @@ async def render_html_to_adapted_image(
     max_size_kb: int = 2048  # 限制最大文件大小（单位 KB）
 ):
     await init_browser()
+    await init_browser(width=width)
     global _context
 
     with tempfile.TemporaryDirectory() as tmpdir:

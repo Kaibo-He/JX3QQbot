@@ -41,7 +41,7 @@ async def generate_team_card(data: dict, keyword: str) -> bytes:
     }
 
     html = template.render(context)
-    await render_html_to_adapted_image(html, cache_path, width=2000)
+    await render_html_to_adapted_image(html, cache_path, width=1500)
     
     return Path(cache_path).read_bytes()
 
