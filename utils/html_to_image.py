@@ -52,7 +52,6 @@ async def render_html_to_adapted_image(
     quality: int = 80,
     max_size_kb: int = 2048  # 限制最大文件大小（单位 KB）
 ):
-    await init_browser()
     await init_browser(width=width)
     global _context
 
